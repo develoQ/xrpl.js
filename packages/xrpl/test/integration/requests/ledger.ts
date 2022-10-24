@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import _ from 'lodash'
+import partial from 'lodash/partial'
 import { LedgerRequest, LedgerResponse } from 'xrpl-local'
 import { Ledger } from 'xrpl-local/models/ledger'
 
@@ -12,7 +12,7 @@ const TIMEOUT = 20000
 describe('ledger', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('base', async function () {

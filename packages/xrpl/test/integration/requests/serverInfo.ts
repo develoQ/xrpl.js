@@ -1,5 +1,6 @@
 import { assert } from 'chai'
-import _ from 'lodash'
+import omit from 'lodash/omit'
+import partial from 'lodash/partial'
 import { ServerInfoRequest } from 'xrpl-local'
 
 import serverUrl from '../serverUrl'
@@ -11,7 +12,7 @@ const TIMEOUT = 20000
 describe('server_info', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('base', async function () {
@@ -99,8 +100,8 @@ describe('server_info', function () {
       'validated_ledger',
     ]
     assert.deepEqual(
-      _.omit(response.result.info, removeKeys),
-      _.omit(expected.result.info, removeKeys),
+      omit(response.result.info, removeKeys),
+      omit(expected.result.info, removeKeys),
     )
 
     // load
@@ -124,7 +125,7 @@ describe('server_info', function () {
     // validated_ledger
     assert.equal(typeof response.result.info.validated_ledger.hash, 'string')
     for (const key of Object.keys(
-      _.omit(response.result.info.validated_ledger, 'hash'),
+      omit(response.result.info.validated_ledger, 'hash'),
     )) {
       assert.equal(typeof response.result.info.validated_ledger[key], 'number')
     }

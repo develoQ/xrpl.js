@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises -- supposed to return a promise here */
 /* eslint-disable no-restricted-syntax -- not sure why this rule is here, definitely not needed here */
 import { assert } from 'chai'
-import _ from 'lodash'
+import partial from 'lodash/partial'
 import { AccountSet, convertStringToHex, ValidationError } from 'xrpl-local'
 
 import { assertRejects } from '../testUtils'
@@ -16,7 +16,7 @@ const TIMEOUT = 60000
 describe('client.submitAndWait', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('submitAndWait an unsigned transaction', async function () {

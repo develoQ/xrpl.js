@@ -1,5 +1,6 @@
 import { assert } from 'chai'
-import _ from 'lodash'
+import omit from 'lodash/omit'
+import partial from 'lodash/partial'
 import { AccountOffersRequest } from 'xrpl-local'
 
 import serverUrl from '../serverUrl'
@@ -11,7 +12,7 @@ const TIMEOUT = 20000
 describe('account_offers', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('base', async function () {
@@ -34,8 +35,8 @@ describe('account_offers', function () {
     assert.equal(response.type, expected.type)
     assert.equal(typeof response.result.ledger_current_index, 'number')
     assert.deepEqual(
-      _.omit(response.result, 'ledger_current_index'),
-      _.omit(expected.result, 'ledger_current_index'),
+      omit(response.result, 'ledger_current_index'),
+      omit(expected.result, 'ledger_current_index'),
     )
   })
 })

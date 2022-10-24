@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import _ from 'lodash'
+import partial from 'lodash/partial'
 import {
   Client,
   OfferCreate,
@@ -46,7 +46,7 @@ async function createTxHandlerTest(
 describe('subscribe', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   /**

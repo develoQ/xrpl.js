@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import _ from 'lodash'
+import partial from 'lodash/partial'
 import { decode } from 'ripple-binary-codec/dist'
 import {
   AccountSet,
@@ -29,7 +29,7 @@ const { hashSignedTx } = hashes
 describe('submit_multisigned', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('submit_multisigned transaction', async function () {

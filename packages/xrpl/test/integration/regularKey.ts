@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import _ from 'lodash'
+import partial from 'lodash/partial'
 import {
   AccountSet,
   Client,
@@ -64,7 +64,7 @@ async function generateFundedWalletWithRegularKey(
 describe('regular key', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('sign and submit with a regular key', async function () {

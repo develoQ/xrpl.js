@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import partial from 'lodash/partial'
 import { AccountSet } from 'xrpl-local/models/transactions'
 
 import serverUrl from '../serverUrl'
@@ -11,7 +11,7 @@ const TIMEOUT = 20000
 describe('AccountSet', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('base', async function () {

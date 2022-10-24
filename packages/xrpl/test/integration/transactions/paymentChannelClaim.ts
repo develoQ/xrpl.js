@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import partial from 'lodash/partial'
 import { PaymentChannelCreate, hashes, PaymentChannelClaim } from 'xrpl-local'
 
 import serverUrl from '../serverUrl'
@@ -12,7 +12,7 @@ const { hashPaymentChannel } = hashes
 describe('PaymentChannelClaim', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('base', async function () {

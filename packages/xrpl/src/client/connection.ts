@@ -2,7 +2,7 @@
 import { EventEmitter } from 'events'
 import { Agent } from 'http'
 
-import _ from 'lodash'
+import omitBy from 'lodash/omitBy'
 import WebSocket from 'ws'
 
 import {
@@ -63,7 +63,7 @@ function getAgent(url: string, config: ConnectionOptions): Agent | undefined {
   const parsedURL = new URL(url)
   const parsedProxyURL = new URL(config.proxy)
 
-  const proxyOptions = _.omitBy(
+  const proxyOptions = omitBy(
     {
       secureEndpoint: parsedURL.protocol === 'wss:',
       secureProxy: parsedProxyURL.protocol === 'https:',
@@ -125,7 +125,7 @@ function createWebSocket(
       Authorization: `Basic ${base64}`,
     }
   }
-  const optionsOverrides = _.omitBy(
+  const optionsOverrides = omitBy(
     {
       ca: config.trustedCertificates,
       key: config.key,

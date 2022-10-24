@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import _ from 'lodash'
+import partial from 'lodash/partial'
 import { AccountSet, hashes, SubmitResponse, TxResponse } from 'xrpl-local'
 import { convertStringToHex } from 'xrpl-local/utils'
 
@@ -13,7 +13,7 @@ const { hashSignedTx } = hashes
 describe('tx', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('base', async function () {

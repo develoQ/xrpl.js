@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import _ from 'lodash'
+import cloneDeep from 'lodash/cloneDeep'
 import { ValidationError } from 'xrpl-local'
 import { Transaction } from 'xrpl-local/models/transactions'
 import Wallet from 'xrpl-local/Wallet'
@@ -29,7 +29,7 @@ describe('client.submit', function () {
     }
 
     it('should submit an unsigned transaction', async function () {
-      const tx = _.cloneDeep(transaction)
+      const tx = cloneDeep(transaction)
 
       const wallet = new Wallet(publicKey, privateKey)
 
@@ -48,7 +48,7 @@ describe('client.submit', function () {
     })
 
     it('should throw a ValidationError when submitting an unsigned transaction without a wallet', async function () {
-      const tx: Transaction = _.cloneDeep(transaction)
+      const tx: Transaction = cloneDeep(transaction)
       delete tx.SigningPubKey
       delete tx.TxnSignature
 

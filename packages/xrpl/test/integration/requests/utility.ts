@@ -1,5 +1,6 @@
 import { assert } from 'chai'
-import _ from 'lodash'
+import omit from 'lodash/omit'
+import partial from 'lodash/partial'
 import { Client } from 'xrpl-local'
 
 import serverUrl from '../serverUrl'
@@ -11,7 +12,7 @@ const TIMEOUT = 20000
 describe('Utility method integration tests', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('ping', async function () {
@@ -22,7 +23,7 @@ describe('Utility method integration tests', function () {
       result: { role: 'admin', unlimited: true },
       type: 'response',
     }
-    assert.deepEqual(_.omit(response, 'id'), expected)
+    assert.deepEqual(omit(response, 'id'), expected)
   })
 
   it('random', async function () {

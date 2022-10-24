@@ -1,5 +1,6 @@
 import { assert } from 'chai'
-import _ from 'lodash'
+import omit from 'lodash/omit'
+import partial from 'lodash/partial'
 import {
   PathFindRequest,
   PathFindResponse,
@@ -17,7 +18,7 @@ const TIMEOUT = 20000
 describe('path_find', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('base', async function () {
@@ -76,10 +77,7 @@ describe('path_find', function () {
         const client: Client = this.client
         client.on('path_find', (path) => {
           assert.equal(path.type, 'path_find')
-          assert.deepEqual(
-            _.omit(path, 'id'),
-            _.omit(expectedStreamResult, 'id'),
-          )
+          assert.deepEqual(omit(path, 'id'), omit(expectedStreamResult, 'id'))
           subscribeDone(this.client, done)
         })
 

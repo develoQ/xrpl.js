@@ -1,6 +1,6 @@
 import assert from 'assert'
 
-import _ from 'lodash'
+import partial from 'lodash/partial'
 import { Client } from 'xrpl-local'
 import { AccountSet, SignerListSet } from 'xrpl-local/models/transactions'
 import { convertStringToHex } from 'xrpl-local/utils'
@@ -21,7 +21,7 @@ const TIMEOUT = 20000
 describe('integration tests', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('isConnected', function () {

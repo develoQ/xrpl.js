@@ -1,5 +1,6 @@
 import { assert } from 'chai'
-import _ from 'lodash'
+import omit from 'lodash/omit'
+import partial from 'lodash/partial'
 import { AccountInfoRequest } from 'xrpl-local'
 
 import serverUrl from '../serverUrl'
@@ -11,7 +12,7 @@ const TIMEOUT = 20000
 describe('account_info', function () {
   this.timeout(TIMEOUT)
 
-  beforeEach(_.partial(setupClient, serverUrl))
+  beforeEach(partial(setupClient, serverUrl))
   afterEach(teardownClient)
 
   it('base', async function () {
@@ -57,13 +58,13 @@ describe('account_info', function () {
     )
     assert.equal(typeof response.result.account_data.Sequence, 'number')
     assert.deepEqual(
-      _.omit(response.result.account_data, [
+      omit(response.result.account_data, [
         'PreviousTxnID',
         'PreviousTxnLgrSeq',
         'Sequence',
         'index',
       ]),
-      _.omit(expected.result.account_data, [
+      omit(expected.result.account_data, [
         'PreviousTxnID',
         'PreviousTxnLgrSeq',
         'Sequence',
