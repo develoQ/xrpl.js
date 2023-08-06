@@ -48,6 +48,7 @@ export enum AccountSetAsfFlags {
    */
   asfAuthorizedNFTokenMinter = 10,
   /** asf 11 is reserved for Hooks amendment */
+  asfTshCollect = 11,
   /** Disallow other accounts from creating incoming NFTOffers */
   asfDisallowIncomingNFTokenOffer = 12,
   /** Disallow other accounts from creating incoming Checks */
