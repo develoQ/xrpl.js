@@ -14,10 +14,10 @@ export enum SetHookFlags {
   hsfOverride = 0x00000001,
   /**
    */
-  hsfNSDelete = 0x00000010,
+  hsfNSDelete = 0x0000002,
   /**
    */
-  hsfCollect = 0x00000100,
+  hsfCollect = 0x00000004,
 }
 
 export interface SetHookFlagsInterface extends GlobalFlags {
