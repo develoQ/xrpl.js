@@ -1,8 +1,9 @@
 import { Amount } from '../common'
+import type { LedgerEntry } from '../ledger'
 
 export interface CreatedNode {
   CreatedNode: {
-    LedgerEntryType: string
+    LedgerEntryType: LedgerEntry['LedgerEntryType']
     LedgerIndex: string
     NewFields: { [field: string]: unknown }
   }
@@ -10,7 +11,7 @@ export interface CreatedNode {
 
 export interface ModifiedNode {
   ModifiedNode: {
-    LedgerEntryType: string
+    LedgerEntryType: LedgerEntry['LedgerEntryType']
     LedgerIndex: string
     FinalFields?: { [field: string]: unknown }
     PreviousFields?: { [field: string]: unknown }
@@ -21,7 +22,7 @@ export interface ModifiedNode {
 
 export interface DeletedNode {
   DeletedNode: {
-    LedgerEntryType: string
+    LedgerEntryType: LedgerEntry['LedgerEntryType']
     LedgerIndex: string
     FinalFields: { [field: string]: unknown }
   }
