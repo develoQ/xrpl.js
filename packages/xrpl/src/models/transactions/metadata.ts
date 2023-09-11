@@ -8,7 +8,7 @@ export interface HookExecution {
     HookHash: string
     HookInstructionCount: string
     HookResult: number
-    HookReturnCode: number
+    HookReturnCode: string
     HookReturnString: string
     HookStateChangeCount: number
   }
