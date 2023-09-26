@@ -3,6 +3,7 @@ import {
   Check,
   DepositPreauth,
   Escrow,
+  Hook,
   Offer,
   PayChannel,
   RippleState,
@@ -17,6 +18,7 @@ type AccountObjectType =
   | 'check'
   | 'deposit_preauth'
   | 'escrow'
+  | 'hook'
   | 'nft_offer'
   | 'offer'
   | 'payment_channel'
@@ -75,6 +77,7 @@ type AccountObject =
   | Check
   | DepositPreauth
   | Escrow
+  | Hook
   | Offer
   | PayChannel
   | SignerList
