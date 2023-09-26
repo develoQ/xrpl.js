@@ -9,6 +9,7 @@ import { AccountSet, validateAccountSet } from './accountSet'
 import { CheckCancel, validateCheckCancel } from './checkCancel'
 import { CheckCash, validateCheckCash } from './checkCash'
 import { CheckCreate, validateCheckCreate } from './checkCreate'
+import { ClaimReward, validateClaimReward } from './claimReward'
 import { DepositPreauth, validateDepositPreauth } from './depositPreauth'
 import { EscrowCancel, validateEscrowCancel } from './escrowCancel'
 import { EscrowCreate, validateEscrowCreate } from './escrowCreate'
@@ -71,6 +72,7 @@ export type Transaction =
   | CheckCancel
   | CheckCash
   | CheckCreate
+  | ClaimReward
   | DepositPreauth
   | EscrowCancel
   | EscrowCreate
@@ -144,6 +146,10 @@ export function validate(transaction: Record<string, unknown>): void {
 
     case 'CheckCreate':
       validateCheckCreate(tx)
+      break
+
+    case 'ClaimReward':
+      validateClaimReward(tx)
       break
 
     case 'DepositPreauth':
