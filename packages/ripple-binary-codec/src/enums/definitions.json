@@ -37,6 +37,7 @@
     "LedgerHashes": 104,
     "Amendments": 102,
     "FeeSettings": 115,
+    "ImportVlseq": 73,
     "Escrow": 117,
     "PayChannel": 120,
     "Check": 67,
@@ -797,9 +798,49 @@
       }
     ],
     [
+      "XahauActivationLgrSeq",
+      {
+        "nth": 96,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "UInt32"
+      }
+    ],
+    [
       "ImportSequence",
       {
         "nth": 97,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "UInt32"
+      }
+    ],
+    [
+      "RewardTime",
+      {
+        "nth": 98,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "UInt32"
+      }
+    ],
+    [
+      "RewardLgrFirst",
+      {
+        "nth": 99,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "UInt32"
+      }
+    ],
+    [
+      "RewardLgrLast",
+      {
+        "nth": 100,
         "isVLEncoded": false,
         "isSerialized": true,
         "isSigningField": true,
@@ -960,6 +1001,36 @@
       "ReferenceCount",
       {
         "nth": 19,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "UInt64"
+      }
+    ],
+    [
+      "AccountIndex",
+      {
+        "nth": 98,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "UInt64"
+      }
+    ],
+    [
+      "AccountCount",
+      {
+        "nth": 99,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "UInt64"
+      }
+    ],
+    [
+      "RewardAccumulator",
+      {
+        "nth": 100,
         "isVLEncoded": false,
         "isSerialized": true,
         "isSigningField": true,
@@ -1350,6 +1421,36 @@
       "URITokenID",
       {
         "nth": 36,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "Hash256"
+      }
+    ],
+    [
+      "GovernanceFlags",
+      {
+        "nth": 99,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "Hash256"
+      }
+    ],
+    [
+      "GovernanceMarks",
+      {
+        "nth": 98,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "Hash256"
+      }
+    ],
+    [
+      "EmittedTxnID",
+      {
+        "nth": 97,
         "isVLEncoded": false,
         "isSerialized": true,
         "isSigningField": true,
@@ -2167,6 +2268,46 @@
       }
     ],
     [
+      "GenesisMint",
+      {
+        "nth": 96,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "STObject"
+      }
+    ],
+    [
+      "ActiveValidator",
+      {
+        "nth": 95,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "STObject"
+      }
+    ],
+    [
+      "ImportVLKey",
+      {
+        "nth": 94,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "STObject"
+      }
+    ],
+    [
+      "HookEmission",
+      {
+        "nth": 93,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "STObject"
+      }
+    ],
+    [
       "Signers",
       {
         "nth": 3,
@@ -2305,6 +2446,46 @@
         "isSigningField": true,
         "type": "STArray"
       }
+    ],
+    [
+      "GenesisMints",
+      {
+        "nth": 96,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "STArray"
+      }
+    ],
+    [
+      "ActiveValidators",
+      {
+        "nth": 95,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "STArray"
+      }
+    ],
+    [
+      "ImportVLKeys",
+      {
+        "nth": 94,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "STArray"
+      }
+    ],
+    [
+      "HookEmissions",
+      {
+        "nth": 93,
+        "isVLEncoded": false,
+        "isSerialized": true,
+        "isSigningField": true,
+        "type": "STArray"
+      }
     ]
   ],
   "TRANSACTION_RESULTS": {
@@ -2399,6 +2580,7 @@
     "tefNO_TICKET": -180,
     "tefNFTOKEN_IS_NOT_TRANSFERABLE": -179,
     "tefPAST_IMPORT_SEQ": -178,
+    "tefPAST_IMPORT_VL_SEQ": -177,
 
     "terRETRY": -99,
     "terFUNDS_SPENT": -98,
@@ -2526,11 +2708,14 @@
     "URITokenBuy": 47,
     "URITokenCreateSellOffer": 48,
     "URITokenCancelSellOffer": 49,
+    "GenesisMint": 96,
     "Import": 97,
+    "ClaimReward": 98,
     "Invoke": 99,
     "EnableAmendment": 100,
     "SetFee": 101,
     "UNLModify": 102,
-    "EmitFailure": 103
+    "EmitFailure": 103,
+    "UNLReport": 104
   }
 }
