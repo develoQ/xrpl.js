@@ -72,6 +72,10 @@ export default interface AccountRoot extends BaseLedgerEntry {
    * account to each other.
    */
   TransferRate?: number
+  ImportSequence?: string
+  GovernanceFlags?: string
+  GovernanceMarks?: string
+  AccountIndex?: number
 }
 
 /**

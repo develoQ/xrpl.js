@@ -24,4 +24,6 @@ export default interface FeeSettings extends BaseLedgerEntry {
    * type.
    */
   Flags: number
+  XahauActivationLgrSeq?: number
+  AccountCount?: number
 }

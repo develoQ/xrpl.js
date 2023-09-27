@@ -128,6 +128,17 @@ export interface LedgerEntryRequest extends BaseRequest {
   }
 
   /**
+   * The Import VL Sequence object to retrieve. If a string, must be the object ID of the VLSequence.
+   * If an object, requires `public_key` sub-field.
+   */
+  import_vlseq?:
+    | {
+        /** The public_key of the Import VL Sequence object. */
+        public_key: string
+      }
+    | string
+
+  /**
    * The Offer object to retrieve. If a string, interpret as the unique object
    * ID to the Offer. If an object, requires the sub-fields `account` and `seq`
    * to uniquely identify the offer.

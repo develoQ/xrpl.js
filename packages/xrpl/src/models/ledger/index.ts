@@ -12,6 +12,7 @@ import FeeSettings from './FeeSettings'
 import Hook from './Hook'
 import HookDefinition from './HookDefinition'
 import HookState from './HookState'
+import ImportVLSequence from './ImportVLSequence'
 import Ledger from './Ledger'
 import LedgerEntry from './LedgerEntry'
 import LedgerHashes from './LedgerHashes'
@@ -21,6 +22,7 @@ import PayChannel from './PayChannel'
 import RippleState, { RippleStateFlags } from './RippleState'
 import SignerList, { SignerListFlags } from './SignerList'
 import Ticket from './Ticket'
+import UNLReport from './UNLReport'
 import URIToken from './URIToken'
 
 export {
@@ -37,6 +39,7 @@ export {
   Hook,
   HookDefinition,
   HookState,
+  ImportVLSequence,
   Ledger,
   LedgerEntry,
   LedgerHashes,
@@ -50,4 +53,5 @@ export {
   SignerListFlags,
   Ticket,
   URIToken,
+  UNLReport,
 }
