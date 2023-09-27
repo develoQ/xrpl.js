@@ -1,12 +1,16 @@
 import BaseLedgerEntry from './BaseLedgerEntry'
 
 interface ImportVLKey {
-  PublicKey: string
-  Account?: string
+  ImportVLKey: {
+    PublicKey: string
+    Account?: string
+  }
 }
-interface ActiveValidators {
-  PublicKey: string
-  Account?: string
+interface ActiveValidator {
+  ActiveValidator: {
+    PublicKey: string
+    Account?: string
+  }
 }
 
 /**
@@ -24,7 +28,7 @@ export default interface UNLReport extends BaseLedgerEntry {
   /**
    *
    */
-  ActiveValidators?: ActiveValidators[]
+  ActiveValidators?: ActiveValidator[]
   /**
    * The identifying hash of the transaction that most recently modified this
    * object.
