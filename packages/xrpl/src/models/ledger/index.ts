@@ -52,6 +52,6 @@ export {
   SignerList,
   SignerListFlags,
   Ticket,
-  URIToken,
   UNLReport,
+  URIToken,
 }
