@@ -105,6 +105,11 @@ let json_omitted = {
 }
 
 const NegativeUNL = require('./fixtures/negative-unl.json')
+const UNLReport = {
+  tx: require('./fixtures/unl-report.json'),
+  binary: require('./fixtures/unl-report-binary.json'),
+  meta: require('./fixtures/unl-report-meta-binary.json'),
+}
 
 function bytesListTest() {
   const list = new BytesList()
@@ -229,6 +234,18 @@ function NegativeUNLTest() {
   })
 }
 
+function UNLReportTest() {
+  test('can serialize UNLReport', () => {
+    expect(encode(UNLReport.tx)).toEqual(UNLReport.binary)
+  })
+  test('can serialize UNLReport metadata', () => {
+    expect(encode(UNLReport.tx.meta)).toEqual(UNLReport.meta)
+  })
+  test('can deserialize UNLReport metadata', () => {
+    expect(decode(UNLReport.meta)).toEqual(UNLReport.tx.meta)
+  })
+}
+
 function omitUndefinedTest() {
   test('omits fields with undefined value', () => {
     let encodedOmitted = encode(json_omitted)
@@ -286,4 +303,5 @@ describe('Binary Serialization', function () {
   describe('OmitUndefined', omitUndefinedTest)
   describe('TicketTest', ticketTest)
   describe('NFToken', nfTokenTest)
+  describe('UNLReport', UNLReportTest)
 })
