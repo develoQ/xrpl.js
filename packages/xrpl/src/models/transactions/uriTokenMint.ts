@@ -1,4 +1,5 @@
 import { ValidationError } from '../../errors'
+import { Amount } from '../common'
 import { isHex } from '../utils'
 
 import { BaseTransaction, GlobalFlags, validateBaseTransaction } from './common'
@@ -73,6 +74,23 @@ export interface URITokenMint extends BaseTransaction {
    * convert this field to the proper encoding.
    */
   URI: string
+
+  /**
+   * Indicates the amount expected or offered for the Token.
+   *
+   * The amount must be non-zero, except when this is a sell
+   * offer and the asset is XRP. This would indicate that the current
+   * owner of the token is giving it away free, either to anyone at all,
+   * or to the account identified by the Destination field.
+   */
+  Amount?: Amount
+
+  /**
+   * If present, indicates that this offer may only be
+   * accepted by the specified account. Attempts by other
+   * accounts to accept this offer MUST fail.
+   */
+  Destination?: string
 
   Digest?: string
 }
