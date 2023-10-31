@@ -32,19 +32,19 @@ All of which works in Node.js (tested for v14+) & web browsers (tested for Chrom
 In an existing project (with package.json), install xrpl.js with:
 
 ```
-$ npm install --save xrpl
+$ npm install --save @transia/xrpl
 ```
 
 Or with `yarn`:
 
 ```
-$ yarn add xrpl
+$ yarn add @transia/xrpl
 ```
 
 Example usage:
 
 ```js
-const xrpl = require("xrpl");
+const xrpl = require("@transia/xrpl");
 async function main() {
   const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233");
   await client.connect();
