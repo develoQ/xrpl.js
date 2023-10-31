@@ -18,7 +18,7 @@ async function createTxWithPaths(): Promise<void> {
     source_account: wallet.classicAddress,
     source_currencies: [
       {
-        currency: 'XRP',
+        currency: 'XAH',
       },
     ],
     destination_account,

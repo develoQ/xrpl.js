@@ -2904,7 +2904,7 @@
             "type_id": 6,
             "is_native": true,
             "type": "Amount",
-            "error": "1000000000000 absolute XRP is bigger than max native value 100000000000.0",
+            "error": "1000000000000 absolute XAH is bigger than max native value 100000000000.0",
             "is_negative": false
         },
         {
@@ -2912,7 +2912,7 @@
             "type_id": 6,
             "is_native": true,
             "type": "Amount",
-            "error": "10000000000000000000 absolute XRP is bigger than max native value 100000000000.0",
+            "error": "10000000000000000000 absolute XAH is bigger than max native value 100000000000.0",
             "is_negative": true
         }
     ]

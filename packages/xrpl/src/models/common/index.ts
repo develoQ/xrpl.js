@@ -1,7 +1,7 @@
 export type LedgerIndex = number | ('validated' | 'closed' | 'current')
 
 interface XRP {
-  currency: 'XRP'
+  currency: 'XAH'
 }
 
 interface IssuedCurrency {

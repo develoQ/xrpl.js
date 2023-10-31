@@ -757,13 +757,13 @@ describe('Wallet', function () {
     it('sign throws when a payment contains an issued currency like XRP', async function () {
       const payment: Payment = { ...issuedCurrencyPayment }
       payment.Amount = {
-        currency: 'xrp',
+        currency: 'xah',
         issuer: 'rnURbz5HLbvqEq69b1B4TX6cUTNMmcrBqi',
         value: '123.40',
       }
       assert.throws(() => {
         wallet.sign(payment)
-      }, /^Trying to sign an issued currency with a similar standard code to XRP \(received 'xrp'\)\. XRP is not an issued currency\./u)
+      }, /^Trying to sign an issued currency with a similar standard code to XAH \(received 'xah'\)\. XAH is not an issued currency\./u)
     })
 
     it('sign does NOT throw when a payment contains an issued currency like xrp in hex string format', async function () {

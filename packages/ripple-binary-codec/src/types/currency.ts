@@ -12,7 +12,7 @@ const STANDARD_FORMAT_HEX_REGEX = /^0{24}[\x00-\x7F]{6}0{10}$/
  */
 function isoToBytes(iso: string): Buffer {
   const bytes = Buffer.alloc(20)
-  if (iso !== 'XRP') {
+  if (iso !== 'XAH') {
     const isoBytes = iso.split('').map((c) => c.charCodeAt(0))
     bytes.set(isoBytes, 12)
   }
@@ -28,7 +28,7 @@ function isIsoCode(iso: string): boolean {
 
 function isoCodeFromHex(code: Buffer): string | null {
   const iso = code.toString()
-  if (iso === 'XRP') {
+  if (iso === 'XAH') {
     return null
   }
   if (isIsoCode(iso)) {
@@ -89,7 +89,7 @@ class Currency extends Hash160 {
     const hex = this.bytes.toString('hex')
 
     if (XRP_HEX_REGEX.test(hex)) {
-      this._iso = 'XRP'
+      this._iso = 'XAH'
     } else if (STANDARD_FORMAT_HEX_REGEX.test(hex)) {
       this._iso = isoCodeFromHex(this.bytes.slice(12, 15))
     } else {

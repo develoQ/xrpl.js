@@ -77,7 +77,7 @@ describe('Hash256', function () {
 
 describe('Currency', function () {
   test('Decoding allows dodgy XRP without throwing', function () {
-    const currencyCode = '0000000000000000000000005852500000000000'
+    const currencyCode = '0000000000000000000000005841480000000000'
     expect(Currency.from(currencyCode).toJSON()).toBe(currencyCode)
   })
   test('Currency code with lowercase letters decodes to ISO code', () => {
@@ -113,7 +113,7 @@ describe('Currency', function () {
 
   test('can be constructed from a Buffer', function () {
     const xrp = new Currency(Buffer.alloc(20))
-    expect(xrp.iso()).toBe('XRP')
+    expect(xrp.iso()).toBe('XAH')
   })
   test('Can handle non-standard currency codes', () => {
     const currency = '015841551A748AD2C1F76FF6ECB0CCCD00000000'

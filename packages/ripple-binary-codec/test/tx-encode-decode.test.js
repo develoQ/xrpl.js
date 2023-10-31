@@ -58,7 +58,7 @@ describe('encoding and decoding tx_json', function () {
       Sequence: 19,
       LimitAmount: {
         value: '200',
-        currency: '0000000000000000000000005852500000000000',
+        currency: '0000000000000000000000005841480000000000',
         issuer: 'r9hEDb4xBGRfBCcX3E4FirDWQBAYtpxC8K',
       },
       Fee: '10',

@@ -105,7 +105,7 @@ function getXRPQuantity(
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- okay here
     account: (node.FinalFields?.Account ?? node.NewFields?.Account) as string,
     balance: {
-      currency: 'XRP',
+      currency: 'XAH',
       value: dropsToXrp(value).toString(),
     },
   }

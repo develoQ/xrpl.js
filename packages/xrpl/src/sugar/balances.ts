@@ -115,7 +115,7 @@ async function getBalances(
         formatBalances(response.result.lines),
       )
       if (xrpBalance !== '') {
-        balances.push({ currency: 'XRP', value: xrpBalance })
+        balances.push({ currency: 'XAH', value: xrpBalance })
       }
       balances.push(...accountLinesBalance)
     },

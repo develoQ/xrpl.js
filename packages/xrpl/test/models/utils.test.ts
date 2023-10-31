@@ -118,7 +118,7 @@ describe('Models Utils', function () {
         TransactionType: 'TrustSet',
         Account: 'rUn84CUYbNjRoTQ6mSW7BVJPSVJNLb1QLo',
         LimitAmount: {
-          currency: 'XRP',
+          currency: 'XAH',
           issuer: 'rcXY84C4g14iFp6taFXjjQGVeHqSCh9RX',
           value: '4329.23',
         },

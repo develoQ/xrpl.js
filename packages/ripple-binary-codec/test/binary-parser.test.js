@@ -369,7 +369,7 @@ function pathSetBinaryTests() {
         currency: 'BTC',
         issuer: 'r3AWbdp2jQLXLywJypdoNwVSvr81xs3uhn',
       },
-      { currency: 'XRP' },
+      { currency: 'XAH' },
       {
         currency: 'USD',
         issuer: 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B',

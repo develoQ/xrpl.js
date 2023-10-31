@@ -485,10 +485,10 @@ class Wallet {
 
         if (
           txCurrency.length === standard_currency_code_len &&
-          txCurrency.toUpperCase() === 'XRP'
+          txCurrency.toUpperCase() === 'XAH'
         ) {
           throw new XrplError(
-            `Trying to sign an issued currency with a similar standard code to XRP (received '${txCurrency}'). XRP is not an issued currency.`,
+            `Trying to sign an issued currency with a similar standard code to XAH (received '${txCurrency}'). XAH is not an issued currency.`,
           )
         }
 
@@ -575,7 +575,7 @@ function removeTrailingZeros(tx: Transaction): void {
 /* eslint-disable @typescript-eslint/no-magic-numbers -- Magic numbers are from rippleds of currency code encoding */
 function isoToHex(iso: string): string {
   const bytes = Buffer.alloc(20)
-  if (iso !== 'XRP') {
+  if (iso !== 'XAH') {
     const isoBytes = iso.split('').map((chr) => chr.charCodeAt(0))
     bytes.set(isoBytes, 12)
   }

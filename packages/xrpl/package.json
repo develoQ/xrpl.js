@@ -80,5 +80,6 @@
   "readmeFilename": "README.md",
   "engines": {
     "node": ">=10.13.0"
-  }
+  },
+  "gitHead": "3b234ec8ec1c677e0f3f534fd2985c985871c87e"
 }
