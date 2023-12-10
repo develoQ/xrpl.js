@@ -14,6 +14,17 @@ export interface HookExecution {
   }
 }
 
+export interface HookEmission {
+  HookEmission: {
+    EmitGeneration: number
+    EmitBurden: string
+    EmitParentTxnID: string
+    EmitNonce: string
+    EmitCallback: string
+    EmitHookHash: string
+  }
+}
+
 export interface CreatedNode {
   CreatedNode: {
     LedgerEntryType: string
@@ -75,6 +86,7 @@ export function isDeletedNode(node: Node): node is DeletedNode {
 
 export interface TransactionMetadata {
   HookExecutions?: HookExecution[]
+  HookEmissions?: HookEmission[]
   AffectedNodes: Node[]
   DeliveredAmount?: Amount
   // "unavailable" possible for transactions before 2014-01-20
