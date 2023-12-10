@@ -60,5 +60,5 @@ export async function getFeeEstimateXrp(
     command: 'fee',
     tx_blob: txBlob,
   })
-  return response.result.drops.base_fee
+  return response.result.drops.open_ledger_fee
 }
