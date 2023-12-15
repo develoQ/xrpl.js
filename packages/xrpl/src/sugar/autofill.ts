@@ -2,6 +2,7 @@ import {
   xAddressToClassicAddress,
   isValidXAddress,
 } from '@transia/ripple-address-codec'
+import { encode } from '@transia/ripple-binary-codec'
 import BigNumber from 'bignumber.js'
 
 import type { Client } from '..'
@@ -11,7 +12,7 @@ import { Transaction } from '../models/transactions'
 import { setTransactionFlagsToNumber } from '../models/utils/flags'
 import { xrpToDrops } from '../utils'
 
-import { getFeeXrp } from './getFeeXrp'
+import { getFeeEstimateXrp, getFeeXrp } from './getFeeXrp'
 
 // Expire unconfirmed transactions after 20 ledger versions, approximately 1 minute, by default
 const LEDGER_OFFSET = 20
@@ -60,7 +61,13 @@ async function autofill<T extends Transaction>(
     promises.push(checkAccountDeleteBlockers(this, tx))
   }
 
-  return Promise.all(promises).then(() => tx)
+  await Promise.all(promises).then(() => tx)
+  const copyTx = { ...tx }
+  copyTx.SigningPubKey = ``
+  const tx_blob = encode(copyTx)
+  // eslint-disable-next-line require-atomic-updates -- ignore
+  tx.Fee = await getFeeEstimateXrp(this, tx_blob)
+  return tx
 }
 
 function setValidAddresses(tx: Transaction): void {
