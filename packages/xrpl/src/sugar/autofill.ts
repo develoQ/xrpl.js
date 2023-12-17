@@ -3,16 +3,14 @@ import {
   isValidXAddress,
 } from '@transia/ripple-address-codec'
 import { encode } from '@transia/ripple-binary-codec'
-import BigNumber from 'bignumber.js'
 
 import type { Client } from '..'
 import { ValidationError, XrplError } from '../errors'
 import { AccountInfoRequest, AccountObjectsRequest } from '../models/methods'
 import { Transaction } from '../models/transactions'
 import { setTransactionFlagsToNumber } from '../models/utils/flags'
-import { xrpToDrops } from '../utils'
 
-import { getFeeEstimateXrp, getFeeXrp } from './getFeeXrp'
+import { getFeeEstimateXrp } from './getFeeXrp'
 
 // Expire unconfirmed transactions after 20 ledger versions, approximately 1 minute, by default
 const LEDGER_OFFSET = 20
@@ -51,22 +49,17 @@ async function autofill<T extends Transaction>(
   if (tx.Sequence == null) {
     promises.push(setNextValidSequenceNumber(this, tx))
   }
-  if (tx.Fee == null) {
-    promises.push(calculateFeePerTransactionType(this, tx, signersCount))
-  }
   if (tx.LastLedgerSequence == null) {
     promises.push(setLatestValidatedLedgerSequence(this, tx))
   }
   if (tx.TransactionType === 'AccountDelete') {
     promises.push(checkAccountDeleteBlockers(this, tx))
   }
-
   await Promise.all(promises).then(() => tx)
-  const copyTx = { ...tx }
-  copyTx.SigningPubKey = ``
-  const tx_blob = encode(copyTx)
-  // eslint-disable-next-line require-atomic-updates -- ignore
-  tx.Fee = await getFeeEstimateXrp(this, tx_blob)
+
+  if (tx.Fee == null) {
+    await calculateFeePerTransactionType(this, tx, signersCount)
+  }
   return tx
 }
 
@@ -153,64 +146,17 @@ async function setNextValidSequenceNumber(
   tx.Sequence = data.result.account_data.Sequence
 }
 
-async function fetchAccountDeleteFee(client: Client): Promise<BigNumber> {
-  const response = await client.request({ command: 'server_state' })
-  const fee = response.result.state.validated_ledger?.reserve_inc
-
-  if (fee == null) {
-    return Promise.reject(new Error('Could not fetch Owner Reserve.'))
-  }
-
-  return new BigNumber(fee)
-}
-
 async function calculateFeePerTransactionType(
   client: Client,
   tx: Transaction,
   signersCount = 0,
 ): Promise<void> {
-  // netFee is usually 0.00001 XRP (10 drops)
-  const netFeeXRP = await getFeeXrp(client)
-  const netFeeDrops = xrpToDrops(netFeeXRP)
-  let baseFee = new BigNumber(netFeeDrops)
-
-  // EscrowFinish Transaction with Fulfillment
-  if (tx.TransactionType === 'EscrowFinish' && tx.Fulfillment != null) {
-    const fulfillmentBytesSize: number = Math.ceil(tx.Fulfillment.length / 2)
-    // 10 drops × (33 + (Fulfillment size in bytes / 16))
-    const product = new BigNumber(
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers -- expected use of magic numbers
-      scaleValue(netFeeDrops, 33 + fulfillmentBytesSize / 16),
-    )
-    baseFee = product.dp(0, BigNumber.ROUND_CEIL)
-  }
-
-  // AccountDelete Transaction
-  if (tx.TransactionType === 'AccountDelete') {
-    baseFee = await fetchAccountDeleteFee(client)
-  }
-
-  /*
-   * Multi-signed Transaction
-   * 10 drops × (1 + Number of Signatures Provided)
-   */
-  if (signersCount > 0) {
-    baseFee = BigNumber.sum(baseFee, scaleValue(netFeeDrops, 1 + signersCount))
-  }
-
-  const maxFeeDrops = xrpToDrops(client.maxFeeXRP)
-  const totalFee =
-    tx.TransactionType === 'AccountDelete'
-      ? baseFee
-      : BigNumber.min(baseFee, maxFeeDrops)
-
-  // Round up baseFee and return it as a string
-  // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-magic-numbers -- param reassign is safe, base 10 magic num
-  tx.Fee = totalFee.dp(0, BigNumber.ROUND_CEIL).toString(10)
-}
-
-function scaleValue(value, multiplier): string {
-  return new BigNumber(value).times(multiplier).toString()
+  const copyTx = { ...tx }
+  copyTx.SigningPubKey = ``
+  copyTx.Fee = `0`
+  const tx_blob = encode(copyTx)
+  // eslint-disable-next-line require-atomic-updates, no-param-reassign -- ignore
+  tx.Fee = await getFeeEstimateXrp(client, tx_blob, signersCount)
 }
 
 async function setLatestValidatedLedgerSequence(

@@ -50,15 +50,20 @@ export async function getFeeXrp(
  *
  * @param client - The Client used to connect to the ledger.
  * @param txBlob - The encoded transaction to estimate the fee for.
+ * @param signersCount - The number of multisigners.
  * @returns The transaction fee.
  */
 export async function getFeeEstimateXrp(
   client: Client,
   txBlob: string,
+  signersCount = 0,
 ): Promise<string> {
   const response = await client.request({
     command: 'fee',
     tx_blob: txBlob,
   })
-  return response.result.drops.open_ledger_fee
+  const openLedgerFee = response.result.drops.open_ledger_fee
+  const baseFee = new BigNumber(response.result.drops.base_fee)
+  const totalFee = BigNumber.sum(openLedgerFee, Number(baseFee) * signersCount)
+  return new BigNumber(totalFee.toFixed(NUM_DECIMAL_PLACES)).toString(BASE_10)
 }
