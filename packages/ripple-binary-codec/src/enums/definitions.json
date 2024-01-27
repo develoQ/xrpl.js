@@ -141,40 +141,40 @@
     [
       "LedgerEntry",
       {
-        "nth": 257,
+        "nth": 1,
         "isVLEncoded": false,
         "isSerialized": false,
-        "isSigningField": false,
+        "isSigningField": true,
         "type": "LedgerEntry"
       }
     ],
     [
       "Transaction",
       {
-        "nth": 257,
+        "nth": 1,
         "isVLEncoded": false,
         "isSerialized": false,
-        "isSigningField": false,
+        "isSigningField": true,
         "type": "Transaction"
       }
     ],
     [
       "Validation",
       {
-        "nth": 257,
+        "nth": 1,
         "isVLEncoded": false,
         "isSerialized": false,
-        "isSigningField": false,
+        "isSigningField": true,
         "type": "Validation"
       }
     ],
     [
       "Metadata",
       {
-        "nth": 257,
+        "nth": 1,
         "isVLEncoded": false,
-        "isSerialized": false,
-        "isSigningField": false,
+        "isSerialized": true,
+        "isSigningField": true,
         "type": "Metadata"
       }
     ],
