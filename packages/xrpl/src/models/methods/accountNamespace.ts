@@ -1,5 +1,4 @@
-import { LedgerIndex } from '../common'
-import { AccountRoot, HookState, SignerList } from '../ledger'
+import { HookState } from '../ledger'
 
 import { BaseRequest, BaseResponse } from './baseMethod'
 
