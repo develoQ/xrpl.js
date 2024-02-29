@@ -11,17 +11,16 @@ export interface HookExecution {
     HookReturnCode: string
     HookReturnString: string
     HookStateChangeCount: number
+    Flags: number
   }
 }
 
 export interface HookEmission {
   HookEmission: {
-    EmitGeneration: number
-    EmitBurden: string
-    EmitParentTxnID: string
+    EmittedTxnID: string
+    HookAccount: string
+    HookHash: string
     EmitNonce: string
-    EmitCallback: string
-    EmitHookHash: string
   }
 }
 

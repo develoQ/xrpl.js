@@ -8,6 +8,10 @@ import {
 } from './accountCurrencies'
 import { AccountInfoRequest, AccountInfoResponse } from './accountInfo'
 import { AccountLinesRequest, AccountLinesResponse } from './accountLines'
+import {
+  AccountNamespaceRequest,
+  AccountNamespaceResponse,
+} from './accountNamespace'
 import { AccountNFTsRequest, AccountNFTsResponse } from './accountNFTs'
 import { AccountObjectsRequest, AccountObjectsResponse } from './accountObjects'
 import {
@@ -83,6 +87,7 @@ type Request =
   | AccountCurrenciesRequest
   | AccountInfoRequest
   | AccountLinesRequest
+  | AccountNamespaceRequest
   | AccountNFTsRequest
   | AccountObjectsRequest
   | AccountOffersRequest
@@ -133,6 +138,7 @@ type Response =
   | AccountCurrenciesResponse
   | AccountInfoResponse
   | AccountLinesResponse
+  | AccountNamespaceResponse
   | AccountNFTsResponse
   | AccountObjectsResponse
   | AccountOffersResponse
