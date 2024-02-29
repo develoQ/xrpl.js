@@ -15,7 +15,12 @@ export interface EscrowCancel extends BaseTransaction {
    * Transaction sequence (or Ticket  number) of EscrowCreate transaction that.
    * created the escrow to cancel.
    */
-  OfferSequence: number
+  OfferSequence?: number
+  /**
+   * The ID of the Escrow ledger object to cancel as a 64-character hexadecimal
+   * string.
+   */
+  EscrowID?: string
 }
 
 /**
@@ -35,11 +40,17 @@ export function validateEscrowCancel(tx: Record<string, unknown>): void {
     throw new ValidationError('EscrowCancel: Owner must be a string')
   }
 
-  if (tx.OfferSequence === undefined) {
-    throw new ValidationError('EscrowCancel: missing OfferSequence')
+  if (tx.OfferSequence === undefined && tx.EscrowID === undefined) {
+    throw new ValidationError(
+      'EscrowCancel: must include OfferSequence or EscrowID',
+    )
   }
 
-  if (typeof tx.OfferSequence !== 'number') {
-    throw new ValidationError('EscrowCancel: OfferSequence must be a number')
+  if (tx.OfferSequence !== undefined && typeof tx.OfferSequence !== 'number') {
+    throw new ValidationError('EscrowCancel: invalid OfferSequence')
+  }
+
+  if (tx.EscrowID !== undefined && typeof tx.EscrowID !== 'string') {
+    throw new ValidationError('EscrowCancel: invalid EscrowID')
   }
 }
