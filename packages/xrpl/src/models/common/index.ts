@@ -17,6 +17,8 @@ export interface IssuedCurrencyAmount extends IssuedCurrency {
 
 export type Amount = IssuedCurrencyAmount | string
 
+export type AmountEntry = Amount
+
 export interface Signer {
   Signer: {
     Account: string
@@ -204,4 +206,22 @@ export interface EmitDetails {
   EmitGeneration: number
   EmitHookHash: string
   EmitParentTxnID: string
+}
+
+/**
+ * The object that describes the uritoken in MintURIToken.
+ */
+export interface MintURIToken {
+  /**
+   *
+   */
+  URI: string
+  /**
+   *
+   */
+  Digest?: string
+  /**
+   * The flags that are set on the uritoken.
+   */
+  Flags?: number
 }

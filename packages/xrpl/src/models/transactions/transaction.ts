@@ -46,6 +46,7 @@ import {
   PaymentChannelFund,
   validatePaymentChannelFund,
 } from './paymentChannelFund'
+import { Remit, validateRemit } from './remit'
 import { SetHook, validateSetHook } from './setHook'
 import { SetRegularKey, validateSetRegularKey } from './setRegularKey'
 import { SignerListSet, validateSignerListSet } from './signerListSet'
@@ -90,6 +91,7 @@ export type Transaction =
   | PaymentChannelClaim
   | PaymentChannelCreate
   | PaymentChannelFund
+  | Remit
   | SetHook
   | SetRegularKey
   | SignerListSet
@@ -220,12 +222,16 @@ export function validate(transaction: Record<string, unknown>): void {
       validatePaymentChannelFund(tx)
       break
 
-    case 'SetRegularKey':
-      validateSetRegularKey(tx)
+    case 'Remit':
+      validateRemit(tx)
       break
 
     case 'SetHook':
       validateSetHook(tx)
+      break
+
+    case 'SetRegularKey':
+      validateSetRegularKey(tx)
       break
 
     case 'SignerListSet':

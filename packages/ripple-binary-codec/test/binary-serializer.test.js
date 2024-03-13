@@ -111,6 +111,11 @@ const UNLReport = {
   meta: require('./fixtures/unl-report-meta-binary.json'),
 }
 
+const Remit = {
+  tx: require('./fixtures/remit-tx.json'),
+  binary: require('./fixtures/remit-binary.json'),
+}
+
 function bytesListTest() {
   const list = new BytesList()
     .put(Buffer.from([0]))
@@ -291,6 +296,12 @@ function nfTokenTest() {
   }
 }
 
+function RemitTest() {
+  test('can serialize Remit', () => {
+    expect(encode(Remit.tx)).toEqual(Remit.binary)
+  })
+}
+
 describe('Binary Serialization', function () {
   describe('nestedObjectTests', nestedObjectTests)
   describe('BytesList', bytesListTest)
@@ -304,4 +315,5 @@ describe('Binary Serialization', function () {
   describe('TicketTest', ticketTest)
   describe('NFToken', nfTokenTest)
   describe('UNLReport', UNLReportTest)
+  describe('Remit', RemitTest)
 })
