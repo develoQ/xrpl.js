@@ -136,6 +136,10 @@ export interface AccountRootFlagsInterface {
    * Disallow incoming Trustlines from other accounts.
    */
   lsfDisallowIncomingTrustline?: boolean
+  /**
+   * Disallow incoming Trustlines from other accounts.
+   */
+  lsfDisallowIncomingRemit?: boolean
 }
 
 export enum AccountRootFlags {
@@ -192,4 +196,12 @@ export enum AccountRootFlags {
    * Disallow incoming Trustlines from other accounts.
    */
   lsfDisallowIncomingTrustline = 0x20000000,
+  /**
+   * The account has issued a URIToken.
+   */
+  lsfURITokenIssuer = 0x40000000,
+  /**
+   * Disallow incoming Remits from other accounts.
+   */
+  lsfDisallowIncomingRemit = 0x80000000,
 }

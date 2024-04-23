@@ -57,6 +57,8 @@ export enum AccountSetAsfFlags {
   asfDisallowIncomingPayChan = 14,
   /** Disallow other accounts from creating incoming Trustlines */
   asfDisallowIncomingTrustline = 15,
+  /** Disallow other accounts from sending incoming Remits */
+  asfDisallowIncomingRemit = 16,
 }
 
 /**
