@@ -4,7 +4,7 @@ import { isHex } from '../utils'
 
 import { BaseTransaction, validateBaseTransaction } from './common'
 
-const MAX_URI_LENGTH = 256
+const MAX_URI_LENGTH = 512
 const DIGEST_LENGTH = 64
 const MAX_ARRAY_LENGTH = 32
 const MAX_BLOB_LENGTH = 1024
