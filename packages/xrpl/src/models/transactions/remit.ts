@@ -33,6 +33,10 @@ export interface Remit extends BaseTransaction {
    */
   MintURIToken?: MintURIToken
   /**
+   *
+   */
+  URITokenIDs?: string[]
+  /**
    * Arbitrary 256-bit hash representing a specific reason or identifier for
    * this payment.
    */
@@ -69,7 +73,7 @@ export function validateRemit(tx: Record<string, unknown>): void {
   if (tx.DestinationTag != null && typeof tx.DestinationTag !== 'number') {
     throw new ValidationError('Remit: DestinationTag must be a number')
   }
-  if (tx.Inform === tx.Account || tx.inform === tx.Destination) {
+  if (tx.Inform === tx.Account || tx.Inform === tx.Destination) {
     throw new ValidationError(
       'Remit: Inform must not be equal to the account or destination',
     )
