@@ -72,6 +72,16 @@ export default interface AccountRoot extends BaseLedgerEntry {
    * account to each other.
    */
   TransferRate?: number
+  NFTokenMinter?: string
+  MintedNFTokens?: number
+  BurnedNFTokens?: number
+  HookStateCount?: number
+  HookNamespaces?: string[]
+  RewardLgrFirst?: number
+  RewardLgrLast?: number
+  RewardTime?: number
+  RewardAccumulator?: number
+  FirstNFTokenSequence?: number
   ImportSequence?: string
   GovernanceFlags?: string
   GovernanceMarks?: string
