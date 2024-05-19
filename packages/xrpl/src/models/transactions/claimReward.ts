@@ -1,6 +1,17 @@
 import { ValidationError } from '../../errors'
 
 import { BaseTransaction, validateBaseTransaction } from './common'
+/**
+ * Transaction Flags for an ClaimReward Transaction.
+ *
+ * @category Transaction Flags
+ */
+export enum ClaimRewardFlags {
+  /**
+   * If set, indicates that the user would like to opt out of rewards.
+   */
+  tfOptOut = 0x00000001,
+}
 
 /**
  * ClaimReward is a transaction model that allows an account to claim rewards.
@@ -9,6 +20,7 @@ import { BaseTransaction, validateBaseTransaction } from './common'
  */
 export interface ClaimReward extends BaseTransaction {
   TransactionType: 'ClaimReward'
+  Flags?: number | ClaimRewardFlags
   /** The unique address of the issuer where the reward.c hook is installed. */
   Issuer?: string
 }
