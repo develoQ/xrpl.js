@@ -1,6 +1,6 @@
 {
-  "name": "@transia/xrpl-models",
-  "version": "2.9.1",
+  "name": "@transia/xahau-models",
+  "version": "2.7.3-alpha.27",
   "description": "",
   "private": false,
   "main": "dist/models/index.js",
