@@ -171,6 +171,10 @@ export interface BaseTransaction {
    */
   NetworkID?: number
   /**
+   *
+   */
+  FirstLedgerSequence?: number
+  /**
    * The hook parameters of the transaction.
    */
   HookParameters?: HookParameter[]
