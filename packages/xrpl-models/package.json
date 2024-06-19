@@ -1,6 +1,6 @@
 {
   "name": "@transia/xahau-models",
-  "version": "2.7.3-alpha.27",
+  "version": "2.7.3-alpha.28",
   "description": "",
   "private": false,
   "main": "dist/models/index.js",
@@ -20,6 +20,6 @@
   },
   "engines": {
     "node": ">=12.0.0",
-    "npm": ">=7.0.0 < 10.0.0"
+    "npm": ">=7.0.0"
   }
 }
