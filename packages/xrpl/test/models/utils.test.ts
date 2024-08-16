@@ -168,7 +168,7 @@ describe('Models Utils', function () {
         AccountRootFlags.lsfDisallowIncomingPayChan |
         AccountRootFlags.lsfDisallowIncomingTrustline |
         AccountRootFlags.lsfDisallowIncomingRemit
-        // AccountRootFlags.lsfAllowTrustLineClawback
+      // AccountRootFlags.lsfAllowTrustLineClawback
 
       const parsed = parseAccountRootFlags(accountRootFlags)
 
@@ -187,7 +187,7 @@ describe('Models Utils', function () {
           parsed.lsfDisallowIncomingPayChan &&
           parsed.lsfDisallowIncomingTrustline &&
           parsed.lsfDisallowIncomingRemit,
-          // parsed.lsfAllowTrustLineClawback,
+        // parsed.lsfAllowTrustLineClawback,
       )
     })
 

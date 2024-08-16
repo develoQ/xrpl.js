@@ -78,11 +78,11 @@ export function setTransactionFlagsToNumber(tx: Transaction): void {
   tx.Flags = txToFlag[tx.TransactionType]
     ? convertFlagsToNumber(tx.Flags, txToFlag[tx.TransactionType])
     : 0
-  if(tx.TransactionType === 'SetHook') {
+  if (tx.TransactionType === 'SetHook') {
     tx.Hooks.forEach((hook: Hook) => {
-    hook.Hook.Flags = convertSetHookFlagsToNumber(
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- idk
-      hook.Hook.Flags as SetHookFlagsInterface,
+      hook.Hook.Flags = convertSetHookFlagsToNumber(
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- idk
+        hook.Hook.Flags as SetHookFlagsInterface,
       )
     })
   }
