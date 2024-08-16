@@ -1,4 +1,5 @@
-import { Amount, LedgerIndex } from '../common'
+import { Amount } from '../common'
+
 import { BaseRequest, BaseResponse, LookupByLedgerRequest } from './baseMethod'
 
 /**

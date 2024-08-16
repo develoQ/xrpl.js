@@ -1,4 +1,5 @@
 import { Amount } from '../common'
+
 import { BaseRequest, BaseResponse, LookupByLedgerRequest } from './baseMethod'
 
 export interface AccountLinesTrustline {

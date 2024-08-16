@@ -62,12 +62,13 @@ import {
   validatePaymentChannelFund,
 } from './paymentChannelFund'
 import { Remit, validateRemit } from './remit'
-import { SetHook, validateSetHook } from './setHook'
 import { SetFee } from './setFee'
+import { SetHook, validateSetHook } from './setHook'
 import { SetRegularKey, validateSetRegularKey } from './setRegularKey'
 import { SignerListSet, validateSignerListSet } from './signerListSet'
 import { TicketCreate, validateTicketCreate } from './ticketCreate'
 import { TrustSet, validateTrustSet } from './trustSet'
+import { UNLModify } from './UNLModify'
 import { URITokenBurn, validateURITokenBurn } from './uriTokenBurn'
 import { URITokenBuy, validateURITokenBuy } from './uriTokenBuy'
 import {
@@ -79,7 +80,6 @@ import {
   validateURITokenCreateSellOffer,
 } from './uriTokenCreateSellOffer'
 import { URITokenMint, validateURITokenMint } from './uriTokenMint'
-import { UNLModify } from './UNLModify'
 import {
   XChainAccountCreateCommit,
   validateXChainAccountCreateCommit,

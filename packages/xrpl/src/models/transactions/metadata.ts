@@ -1,4 +1,5 @@
 import { Amount } from '../common'
+
 import { BaseTransaction } from './common'
 import {
   NFTokenAcceptOffer,
@@ -14,7 +15,6 @@ import {
 } from './NFTokenCreateOffer'
 import { NFTokenMint, NFTokenMintMetadata } from './NFTokenMint'
 import { Payment, PaymentMetadata } from './payment'
-
 
 export interface HookExecution {
   HookExecution: {
@@ -111,7 +111,7 @@ export interface TransactionMetadataBase {
   TransactionResult: string
 }
 
-export type TransactionMetadata<T extends BaseTransaction = Transaction> =
+export type TransactionMetadata<T extends BaseTransaction = BaseTransaction> =
   T extends Payment
     ? PaymentMetadata
     : T extends NFTokenMint

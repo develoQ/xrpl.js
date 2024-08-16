@@ -230,7 +230,7 @@ export interface LedgerEntryRequest extends BaseRequest, LookupByLedgerRequest {
       }
     | string
 
-    /**
+  /**
    * The URIToken object to retrieve. If a string, must be the object ID of the
    * URIToken, as hexadecimal. If an object, the `issuer` and `uri`
    * sub-fields are required to uniquely specify the URIToken entry.
@@ -240,7 +240,7 @@ export interface LedgerEntryRequest extends BaseRequest, LookupByLedgerRequest {
         /** The issuer of the URIToken object. */
         issuer: string
         /** The URIToken uri string (ascii). */
-    uri: string
+        uri: string
       }
     | string
 }

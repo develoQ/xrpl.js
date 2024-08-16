@@ -51,7 +51,8 @@ export function validateEscrowCancel(tx: Record<string, unknown>): void {
   }
 
   if (
-    (tx.OfferSequence != null && typeof tx.OfferSequence !== 'number' &&
+    (tx.OfferSequence != null &&
+      typeof tx.OfferSequence !== 'number' &&
       typeof tx.OfferSequence !== 'string') ||
     Number.isNaN(Number(tx.OfferSequence))
   ) {
