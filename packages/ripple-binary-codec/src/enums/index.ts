@@ -1,4 +1,4 @@
-import enums from './definitions.json'
+import enums from './definitions-xahau.json'
 import {
   XrplDefinitionsBase,
   FieldInstance,

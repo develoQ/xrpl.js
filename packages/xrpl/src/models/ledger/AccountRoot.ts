@@ -157,7 +157,7 @@ export interface AccountRootFlagsInterface {
   /**
    * This address can claw back issued IOUs. Once enabled, cannot be disabled.
    */
-  lsfAllowTrustLineClawback?: boolean
+  // lsfAllowTrustLineClawback?: boolean
   /**
    * Disallow incoming Trustlines from other accounts.
    */
