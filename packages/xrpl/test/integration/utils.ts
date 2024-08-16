@@ -431,7 +431,7 @@ export async function createAMMPool(client: Client): Promise<{
 
   await testTransaction(client, ammCreateTx, lpWallet)
 
-  const asset: Currency = { currency: 'XRP' }
+  const asset: Currency = { currency: 'XAH' }
   const asset2: Currency = {
     currency: currencyCode,
     issuer: issuerWallet.classicAddress,

@@ -21,7 +21,7 @@ describe('OracleSet', function () {
       PriceDataSeries: [
         {
           PriceData: {
-            BaseAsset: 'XRP',
+            BaseAsset: 'XAH',
             QuoteAsset: 'USD',
             AssetPrice: 740,
             Scale: 3,
@@ -106,7 +106,7 @@ describe('OracleSet', function () {
   it(`throws w/ PriceDataSeries must have at most 10 PriceData objects`, function () {
     tx.PriceDataSeries = new Array(11).fill({
       PriceData: {
-        BaseAsset: 'XRP',
+        BaseAsset: 'XAH',
         QuoteAsset: 'USD',
         AssetPrice: 740,
         Scale: 3,

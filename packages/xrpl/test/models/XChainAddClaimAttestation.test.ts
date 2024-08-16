@@ -31,11 +31,11 @@ describe('XChainAddClaimAttestation', function () {
       XChainBridge: {
         IssuingChainDoor: 'rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh',
         IssuingChainIssue: {
-          currency: 'XRP',
+          currency: 'XAH',
         },
         LockingChainDoor: 'rDJVtEuDKr4rj1B3qtW7R5TVWdXV2DY7Qg',
         LockingChainIssue: {
-          currency: 'XRP',
+          currency: 'XAH',
         },
       },
       XChainClaimID: '0000000000000001',

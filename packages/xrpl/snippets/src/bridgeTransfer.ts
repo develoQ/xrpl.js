@@ -46,7 +46,7 @@ async function bridgeTransfer(): Promise<void> {
   const bridgeData = lockingAccountObjects.filter(
     (obj) =>
       obj.LedgerEntryType === 'Bridge' &&
-      obj.XChainBridge.LockingChainIssue.currency === 'XRP',
+      obj.XChainBridge.LockingChainIssue.currency === 'XAH',
   )[0] as LedgerEntry.Bridge
   const bridge: XChainBridge = bridgeData.XChainBridge
   console.log(bridge)

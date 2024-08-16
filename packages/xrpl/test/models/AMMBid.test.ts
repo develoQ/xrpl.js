@@ -16,7 +16,7 @@ describe('AMMBid', function () {
       TransactionType: 'AMMBid',
       Account: 'rWYkbWkCeg8dP6rXALnjgZSjjLyih5NXm',
       Asset: {
-        currency: 'XRP',
+        currency: 'XAH',
       },
       Asset2: {
         currency: 'ETH',

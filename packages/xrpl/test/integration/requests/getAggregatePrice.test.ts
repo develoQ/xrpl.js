@@ -32,7 +32,7 @@ describe('get_aggregate_price', function () {
         PriceDataSeries: [
           {
             PriceData: {
-              BaseAsset: 'XRP',
+              BaseAsset: 'XAH',
               QuoteAsset: 'USD',
               AssetPrice: 740,
               Scale: 3,
@@ -50,7 +50,7 @@ describe('get_aggregate_price', function () {
       const getAggregatePriceResponse = await testContext.client.request({
         command: 'get_aggregate_price',
         account: testContext.wallet.classicAddress,
-        base_asset: 'XRP',
+        base_asset: 'XAH',
         quote_asset: 'USD',
         trim: 20,
         oracles: [

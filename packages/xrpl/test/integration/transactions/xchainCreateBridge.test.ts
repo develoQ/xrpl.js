@@ -28,9 +28,9 @@ describe('XChainCreateBridge', function () {
         Account: testContext.wallet.classicAddress,
         XChainBridge: {
           LockingChainDoor: testContext.wallet.classicAddress,
-          LockingChainIssue: { currency: 'XRP' },
+          LockingChainIssue: { currency: 'XAH' },
           IssuingChainDoor: GENESIS_ACCOUNT,
-          IssuingChainIssue: { currency: 'XRP' },
+          IssuingChainIssue: { currency: 'XAH' },
         },
         SignatureReward: '200',
         MinAccountCreateAmount: '10000000',

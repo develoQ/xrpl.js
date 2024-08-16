@@ -997,7 +997,7 @@ class Client extends EventEmitter<EventTypes> {
           formatBalances(response.result.lines),
         )
         if (xrpBalance !== 0) {
-          balances.push({ currency: 'XRP', value: xrpBalance.toString() })
+          balances.push({ currency: 'XAH', value: xrpBalance.toString() })
         }
         balances.push(...accountLinesBalance)
       },

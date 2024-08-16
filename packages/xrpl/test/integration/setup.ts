@@ -110,9 +110,9 @@ export async function setupBridge(client: Client): Promise<TestBridge> {
   const signatureReward = '200'
   const xchainBridge: XChainBridge = {
     LockingChainDoor: doorAccount.classicAddress,
-    LockingChainIssue: { currency: 'XRP' },
+    LockingChainIssue: { currency: 'XAH' },
     IssuingChainDoor: GENESIS_ACCOUNT,
-    IssuingChainIssue: { currency: 'XRP' },
+    IssuingChainIssue: { currency: 'XAH' },
   }
   const setupTx: XChainCreateBridge = {
     TransactionType: 'XChainCreateBridge',

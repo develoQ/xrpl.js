@@ -248,10 +248,10 @@ export function validate(transaction: Record<string, unknown>): void {
 
       if (
         txCurrency.length === standard_currency_code_len &&
-        txCurrency.toUpperCase() === 'XRP'
+        txCurrency.toUpperCase() === 'XAH'
       ) {
         throw new ValidationError(
-          `Cannot have an issued currency with a similar standard code to XRP (received '${txCurrency}'). XRP is not an issued currency.`,
+          `Cannot have an issued currency with a similar standard code to XAH (received '${txCurrency}'). XAH is not an issued currency.`,
         )
       }
     }

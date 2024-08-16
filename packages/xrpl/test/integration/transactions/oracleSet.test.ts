@@ -33,7 +33,7 @@ describe('OracleSet', function () {
         PriceDataSeries: [
           {
             PriceData: {
-              BaseAsset: 'XRP',
+              BaseAsset: 'XAH',
               QuoteAsset: 'USD',
               AssetPrice: 740,
               Scale: 3,
@@ -63,7 +63,7 @@ describe('OracleSet', function () {
       assert.equal(oracle.AssetClass, tx.AssetClass)
       assert.equal(oracle.Provider, tx.Provider)
       assert.equal(oracle.PriceDataSeries.length, 1)
-      assert.equal(oracle.PriceDataSeries[0].PriceData.BaseAsset, 'XRP')
+      assert.equal(oracle.PriceDataSeries[0].PriceData.BaseAsset, 'XAH')
       assert.equal(oracle.PriceDataSeries[0].PriceData.QuoteAsset, 'USD')
       assert.equal(oracle.PriceDataSeries[0].PriceData.AssetPrice, '2e4')
       assert.equal(oracle.PriceDataSeries[0].PriceData.Scale, 3)

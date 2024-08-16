@@ -32,7 +32,7 @@ describe('OracleDelete', function () {
         PriceDataSeries: [
           {
             PriceData: {
-              BaseAsset: 'XRP',
+              BaseAsset: 'XAH',
               QuoteAsset: 'USD',
               AssetPrice: 740,
               Scale: 3,

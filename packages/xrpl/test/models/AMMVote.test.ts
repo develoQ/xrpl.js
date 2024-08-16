@@ -16,7 +16,7 @@ describe('AMMVote', function () {
       TransactionType: 'AMMVote',
       Account: 'rWYkbWkCeg8dP6rXALnjgZSjjLyih5NXm',
       Asset: {
-        currency: 'XRP',
+        currency: 'XAH',
       },
       Asset2: {
         currency: 'ETH',

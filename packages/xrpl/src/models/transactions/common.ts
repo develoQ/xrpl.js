@@ -102,7 +102,7 @@ export function isCurrency(input: unknown): input is Currency {
       typeof input.issuer === 'string' &&
       typeof input.currency === 'string') ||
       (Object.keys(input).length === XRP_CURRENCY_SIZE &&
-        input.currency === 'XRP'))
+        input.currency === 'XAH'))
   )
 }
 

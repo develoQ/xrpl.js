@@ -18,11 +18,11 @@ describe('XChainCommit', function () {
       XChainBridge: {
         LockingChainDoor: 'rGzx83BVoqTYbGn7tiVAnFw7cbxjin13jL',
         LockingChainIssue: {
-          currency: 'XRP',
+          currency: 'XAH',
         },
         IssuingChainDoor: 'r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV',
         IssuingChainIssue: {
-          currency: 'XRP',
+          currency: 'XAH',
         },
       },
       Fee: '10',
