@@ -1,4 +1,6 @@
+import { XrplDefinitions } from './../src/enums/xrpl-definitions'
 import fixtures from './fixtures/data-driven-tests.json'
+import xahauDefinitions from './../src/enums/definitions-xahau.json'
 
 const { binary } = require('../src/coretypes')
 const { encode, decode } = require('../src')
@@ -247,13 +249,19 @@ function NegativeUNLTest() {
 
 function UNLReportTest() {
   test('can serialize UNLReport', () => {
-    expect(encode(UNLReport.tx)).toEqual(UNLReport.binary)
+    expect(encode(UNLReport.tx, new XrplDefinitions(xahauDefinitions))).toEqual(
+      UNLReport.binary,
+    )
   })
   test('can serialize UNLReport metadata', () => {
-    expect(encode(UNLReport.tx.meta)).toEqual(UNLReport.meta)
+    expect(
+      encode(UNLReport.tx.meta, new XrplDefinitions(xahauDefinitions)),
+    ).toEqual(UNLReport.meta)
   })
   test('can deserialize UNLReport metadata', () => {
-    expect(decode(UNLReport.meta)).toEqual(UNLReport.tx.meta)
+    expect(
+      decode(UNLReport.meta, new XrplDefinitions(xahauDefinitions)),
+    ).toEqual(UNLReport.tx.meta)
   })
 }
 
@@ -304,7 +312,9 @@ function nfTokenTest() {
 
 function RemitTest() {
   test('can serialize Remit', () => {
-    expect(encode(Remit.tx)).toEqual(Remit.binary)
+    expect(encode(Remit.tx, new XrplDefinitions(xahauDefinitions))).toEqual(
+      Remit.binary,
+    )
   })
 }
 
