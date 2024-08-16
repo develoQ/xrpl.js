@@ -4,66 +4,121 @@ import {
 } from '@transia/ripple-address-codec'
 import { encode } from '@transia/ripple-binary-codec'
 
-import type { Client } from '..'
+import { type Client } from '..'
 import { ValidationError, XrplError } from '../errors'
 import { AccountInfoRequest, AccountObjectsRequest } from '../models/methods'
 import { Transaction } from '../models/transactions'
-import { setTransactionFlagsToNumber } from '../models/utils/flags'
 
 import { getFeeEstimateXrp } from './getFeeXrp'
 
 // Expire unconfirmed transactions after 20 ledger versions, approximately 1 minute, by default
 const LEDGER_OFFSET = 20
+// Sidechains are expected to have network IDs above this.
+// Networks with ID above this restricted number are expected specify an accurate NetworkID field
+// in every transaction to that chain to prevent replay attacks.
+// Mainnet and testnet are exceptions. More context: https://github.com/XRPLF/rippled/pull/4370
 const RESTRICTED_NETWORKS = 1024
+const REQUIRED_NETWORKID_VERSION = '1.11.0'
+
+/**
+ * Determines whether the source rippled version is not later than the target rippled version.
+ * Example usage: isNotLaterRippledVersion('1.10.0', '1.11.0') returns true.
+ *                isNotLaterRippledVersion('1.10.0', '1.10.0-b1') returns false.
+ *
+ * @param source -- The source rippled version.
+ * @param target -- The target rippled version.
+ * @returns True if source is earlier than target, false otherwise.
+ */
+// eslint-disable-next-line max-lines-per-function, max-statements -- Disable for this helper functions.
+function isNotLaterRippledVersion(source: string, target: string): boolean {
+  if (source === target) {
+    return true
+  }
+  const sourceDecomp = source.split('.')
+  const targetDecomp = target.split('.')
+  const sourceMajor = parseInt(sourceDecomp[0], 10)
+  const sourceMinor = parseInt(sourceDecomp[1], 10)
+  const targetMajor = parseInt(targetDecomp[0], 10)
+  const targetMinor = parseInt(targetDecomp[1], 10)
+  // Compare major version
+  if (sourceMajor !== targetMajor) {
+    return sourceMajor < targetMajor
+  }
+  // Compare minor version
+  if (sourceMinor !== targetMinor) {
+    return sourceMinor < targetMinor
+  }
+  const sourcePatch = sourceDecomp[2].split('-')
+  const targetPatch = targetDecomp[2].split('-')
+
+  const sourcePatchVersion = parseInt(sourcePatch[0], 10)
+  const targetPatchVersion = parseInt(targetPatch[0], 10)
+
+  // Compare patch version
+  if (sourcePatchVersion !== targetPatchVersion) {
+    return sourcePatchVersion < targetPatchVersion
+  }
+
+  // Compare release version
+  if (sourcePatch.length !== targetPatch.length) {
+    return sourcePatch.length > targetPatch.length
+  }
+
+  if (sourcePatch.length === 2) {
+    // Compare different release types
+    if (!sourcePatch[1][0].startsWith(targetPatch[1][0])) {
+      return sourcePatch[1] < targetPatch[1]
+    }
+    // Compare beta version
+    if (sourcePatch[1].startsWith('b')) {
+      return (
+        parseInt(sourcePatch[1].slice(1), 10) <
+        parseInt(targetPatch[1].slice(1), 10)
+      )
+    }
+    // Compare rc version
+    return (
+      parseInt(sourcePatch[1].slice(2), 10) <
+      parseInt(targetPatch[1].slice(2), 10)
+    )
+  }
+
+  return false
+}
+
+/**
+ * Determine if the transaction required a networkID to be valid.
+ * Transaction needs networkID if later than restricted ID and build version is >= 1.11.0
+ *
+ * @param client -- The connected client.
+ * @returns True if required networkID, false otherwise.
+ */
+export function txNeedsNetworkID(client: Client): boolean {
+  if (
+    client.networkID !== undefined &&
+    client.networkID > RESTRICTED_NETWORKS
+  ) {
+    if (
+      client.buildVersion &&
+      isNotLaterRippledVersion(REQUIRED_NETWORKID_VERSION, client.buildVersion)
+    ) {
+      return true
+    }
+  }
+  return false
+}
+
 interface ClassicAccountAndTag {
   classicAccount: string
   tag: number | false | undefined
 }
 
 /**
- * Autofills fields in a transaction. This will set `Sequence`, `Fee`,
- * `lastLedgerSequence` according to the current state of the server this Client
- * is connected to. It also converts all X-Addresses to classic addresses and
- * flags interfaces into numbers.
+ * Sets valid addresses for the transaction.
  *
- * @param this - A client.
- * @param transaction - A {@link Transaction} in JSON format
- * @param signersCount - The expected number of signers for this transaction.
- * Only used for multisigned transactions.
- * @returns The autofilled transaction.
+ * @param tx - The transaction object.
  */
-async function autofill<T extends Transaction>(
-  this: Client,
-  transaction: T,
-  signersCount?: number,
-): Promise<T> {
-  const tx = { ...transaction }
-
-  setValidAddresses(tx)
-
-  setTransactionFlagsToNumber(tx)
-  const promises: Array<Promise<void>> = []
-  if (this.networkID > RESTRICTED_NETWORKS && tx.NetworkID == null) {
-    tx.NetworkID = this.networkID
-  }
-  if (tx.Sequence == null) {
-    promises.push(setNextValidSequenceNumber(this, tx))
-  }
-  if (tx.LastLedgerSequence == null) {
-    promises.push(setLatestValidatedLedgerSequence(this, tx))
-  }
-  if (tx.TransactionType === 'AccountDelete') {
-    promises.push(checkAccountDeleteBlockers(this, tx))
-  }
-  await Promise.all(promises).then(() => tx)
-
-  if (tx.Fee == null) {
-    await calculateFeePerTransactionType(this, tx, signersCount)
-  }
-  return tx
-}
-
-function setValidAddresses(tx: Transaction): void {
+export function setValidAddresses(tx: Transaction): void {
   validateAccountAddress(tx, 'Account', 'SourceTag')
   // eslint-disable-next-line @typescript-eslint/dot-notation -- Destination can exist on Transaction
   if (tx['Destination'] != null) {
@@ -79,6 +134,14 @@ function setValidAddresses(tx: Transaction): void {
   convertToClassicAddress(tx, 'RegularKey')
 }
 
+/**
+ * Validates the account address in a transaction object.
+ *
+ * @param tx - The transaction object.
+ * @param accountField - The field name for the account address in the transaction object.
+ * @param tagField - The field name for the tag in the transaction object.
+ * @throws {ValidationError} If the tag field does not match the tag of the account address.
+ */
 function validateAccountAddress(
   tx: Transaction,
   accountField: string,
@@ -100,6 +163,14 @@ function validateAccountAddress(
   }
 }
 
+/**
+ * Retrieves the classic account and tag from an account address.
+ *
+ * @param Account - The account address.
+ * @param [expectedTag] - The expected tag for the account address.
+ * @returns The classic account and tag.
+ * @throws {ValidationError} If the address includes a tag that does not match the tag specified in the transaction.
+ */
 function getClassicAccountAndTag(
   Account: string,
   expectedTag?: number,
@@ -122,6 +193,12 @@ function getClassicAccountAndTag(
   }
 }
 
+/**
+ * Converts the specified field of a transaction object to a classic address format.
+ *
+ * @param tx - The transaction object.
+ * @param fieldName - The name of the field to convert.export
+ */
 function convertToClassicAddress(tx: Transaction, fieldName: string): void {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- assignment is safe
   const account = tx[fieldName]
@@ -132,7 +209,15 @@ function convertToClassicAddress(tx: Transaction, fieldName: string): void {
   }
 }
 
-async function setNextValidSequenceNumber(
+/**
+ * Sets the next valid sequence number for a transaction.
+ *
+ * @param client - The client object used for making requests.
+ * @param tx - The transaction object for which the sequence number needs to be set.
+ * @returns A Promise that resolves when the sequence number is set.
+ * @throws {Error} If there is an error retrieving the account information.
+ */
+export async function setNextValidSequenceNumber(
   client: Client,
   tx: Transaction,
 ): Promise<void> {
@@ -146,7 +231,15 @@ async function setNextValidSequenceNumber(
   tx.Sequence = data.result.account_data.Sequence
 }
 
-async function calculateFeePerTransactionType(
+/**
+ * Calculates the fee per transaction type.
+ *
+ * @param client - The client object.
+ * @param tx - The transaction object.
+ * @param [signersCount=0] - The number of signers (default is 0). Only used for multisigning.
+ * @returns A promise that resolves with void. Modifies the `tx` parameter to give it the calculated fee.
+ */
+export async function calculateFeePerTransactionType(
   client: Client,
   tx: Transaction,
   signersCount = 0,
@@ -159,7 +252,14 @@ async function calculateFeePerTransactionType(
   tx.Fee = await getFeeEstimateXrp(client, tx_blob, signersCount)
 }
 
-async function setLatestValidatedLedgerSequence(
+/**
+ * Sets the latest validated ledger sequence for the transaction.
+ *
+ * @param client - The client object.
+ * @param tx - The transaction object.
+ * @returns A promise that resolves with void. Modifies the `tx` parameter setting `LastLedgerSequence`.
+ */
+export async function setLatestValidatedLedgerSequence(
   client: Client,
   tx: Transaction,
 ): Promise<void> {
@@ -168,7 +268,14 @@ async function setLatestValidatedLedgerSequence(
   tx.LastLedgerSequence = ledgerSequence + LEDGER_OFFSET
 }
 
-async function checkAccountDeleteBlockers(
+/**
+ * Checks for any blockers that prevent the deletion of an account.
+ *
+ * @param client - The client object.
+ * @param tx - The transaction object.
+ * @returns A promise that resolves with void if there are no blockers, or rejects with an XrplError if there are blockers.
+ */
+export async function checkAccountDeleteBlockers(
   client: Client,
   tx: Transaction,
 ): Promise<void> {
@@ -191,5 +298,3 @@ async function checkAccountDeleteBlockers(
     resolve()
   })
 }
-
-export default autofill

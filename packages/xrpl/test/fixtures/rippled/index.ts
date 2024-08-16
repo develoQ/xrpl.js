@@ -6,12 +6,14 @@ import fabric from './bookOffers'
 import usd_xrp from './bookOffersUsdXrp.json'
 import xrp_usd from './bookOffersXrpUsd.json'
 import normalLedger from './ledger.json'
-import first_page from './ledgerDataFirstPage.json'
-import last_page from './ledgerDataLastPage.json'
+import firstPage from './ledgerDataFirstPage.json'
+import firstPageEmpty from './ledgerDataFirstPageEmpty.json'
+import lastPage from './ledgerDataLastPage.json'
 import iouPartialPayment from './partialPaymentIOU.json'
 import xrpPartialPayment from './partialPaymentXRP.json'
 import normalServerInfo from './serverInfo.json'
 import highLoadFactor from './serverInfoHighLoadFactor.json'
+import withNetworkIDServerInfo from './serverInfoNetworkID.json'
 import consensusStream from './streams/consensusPhase.json'
 import ledgerStream from './streams/ledger.json'
 import manifestStream from './streams/manifest.json'
@@ -24,8 +26,12 @@ import successSubmit from './submit.json'
 import successSubscribe from './subscribe.json'
 import errorSubscribe from './subscribeError.json'
 import transaction_entry from './transactionEntry.json'
+import NFTokenMint from './tx/NFTokenMint.json'
+import NFTokenMint2 from './tx/NFTokenMint2.json'
 import OfferCreateSell from './tx/offerCreateSell.json'
 import Payment from './tx/payment.json'
+import XChainCreateClaimID from './tx/XChainCreateClaimID.json'
+import XChainCreateClaimID2 from './tx/XChainCreateClaimID2.json'
 import unsubscribe from './unsubscribe.json'
 
 const submit = {
@@ -77,18 +83,24 @@ const book_offers = {
 }
 
 const ledger_data = {
-  first_page,
-  last_page,
+  firstPage,
+  firstPageEmpty,
+  lastPage,
 }
 
 const server_info = {
   normal: normalServerInfo,
   highLoadFactor,
+  withNetworkId: withNetworkIDServerInfo,
 }
 
 const tx = {
+  NFTokenMint,
+  NFTokenMint2,
   Payment,
   OfferCreateSell,
+  XChainCreateClaimID,
+  XChainCreateClaimID2,
 }
 
 const rippled = {
