@@ -1,9 +1,6 @@
-/* eslint-disable max-lines -- There are lots of equivalent constructors which make sense to have here. */
 import { HDKey } from '@scure/bip32'
 import { mnemonicToSeedSync, validateMnemonic } from '@scure/bip39'
 import { wordlist } from '@scure/bip39/wordlists/english'
-import { bytesToHex } from '@xrplf/isomorphic/utils'
-import BigNumber from 'bignumber.js'
 import {
   classicAddressToXAddress,
   isValidXAddress,
@@ -21,6 +18,8 @@ import {
   generateSeed,
   sign,
 } from '@transia/ripple-keypairs'
+import { bytesToHex } from '@xrplf/isomorphic/utils'
+import BigNumber from 'bignumber.js'
 
 import ECDSA from '../ECDSA'
 import { ValidationError } from '../errors'

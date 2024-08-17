@@ -70,7 +70,7 @@ describe('EscrowFinish', function () {
         TransactionType: 'EscrowFinish',
         Account: testContext.wallet.classicAddress,
         Owner: testContext.wallet.classicAddress,
-        OfferSequence: sequence!,
+        OfferSequence: sequence,
       }
 
       // wait for the escrow to be ready to finish

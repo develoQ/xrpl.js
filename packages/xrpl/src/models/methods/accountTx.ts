@@ -136,7 +136,7 @@ export type AccountTxResponse = AccountTxResponseBase
  *
  * @category ResponsesV1
  */
-export type AccountTxV1Response = AccountTxResponseBase<typeof RIPPLED_API_V1>
+export type AccountTxV1Response = AccountTxResponseBase
 
 /**
  * Type to map between the API version and the response type.

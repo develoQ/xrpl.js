@@ -154,6 +154,7 @@ describe('account_info', function () {
         signer_lists: true,
         api_version: 1,
       }
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments -- for api_version 1
       const response = await testContext.client.request<AccountInfoRequest, 1>(
         request,
       )

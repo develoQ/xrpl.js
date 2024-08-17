@@ -7,10 +7,7 @@ import type {
   TxResponse,
 } from '..'
 import type { Amount, APIVersion, DEFAULT_API_VERSION } from '../models/common'
-import type {
-  AccountTxTransaction,
-  RequestResponseMap,
-} from '../models/methods'
+import type { RequestResponseMap } from '../models/methods'
 import { AccountTxVersionResponseMap } from '../models/methods/accountTx'
 import { BaseRequest, BaseResponse } from '../models/methods/baseMethod'
 import { PaymentFlags, Transaction } from '../models/transactions'
@@ -91,14 +88,13 @@ function accountTxHasPartialPayment<
 >(response: AccountTxVersionResponseMap<Version>): boolean {
   const { transactions } = response.result
   const foo = transactions.some((tx) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- required to check API version model
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- api_version 1
     if (tx.tx_json != null) {
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- use API v2 model
-      const transaction = tx as AccountTxTransaction
+      const transaction = tx
       return isPartialPayment(transaction.tx_json, transaction.meta)
     }
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- use API v1 model
-    const transaction = tx as AccountTxTransaction<1>
+
+    const transaction = tx
     return isPartialPayment(transaction.tx, transaction.meta)
   })
   return foo

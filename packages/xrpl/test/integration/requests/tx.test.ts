@@ -93,6 +93,7 @@ describe('tx', function () {
       )
 
       const hash = hashSignedTx(response.result.tx_blob)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments -- for api_version 1
       const txV1Response = await testContext.client.request<TxRequest, 1>({
         command: 'tx',
         transaction: hash,

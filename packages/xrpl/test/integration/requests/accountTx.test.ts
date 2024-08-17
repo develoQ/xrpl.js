@@ -125,6 +125,7 @@ describe('account_tx', function () {
         ledger_index: 'validated',
         api_version: 1,
       }
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments -- for api_version 1
       const response = await testContext.client.request<AccountTxRequest, 1>(
         request,
       )

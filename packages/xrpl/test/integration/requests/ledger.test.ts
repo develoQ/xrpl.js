@@ -107,6 +107,7 @@ describe('ledger', function () {
         type: 'response',
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments -- for api_version 1
       const ledgerResponse = await testContext.client.request<LedgerRequest, 1>(
         ledgerRequest,
       )

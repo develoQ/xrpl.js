@@ -154,6 +154,7 @@ describe('submit_multisigned', function () {
       const signed1 = signerWallet1.sign(accountSetTx, true)
       const signed2 = signerWallet2.sign(accountSetTx, true)
       const multisigned = multisign([signed1.tx_blob, signed2.tx_blob])
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments -- for api_version 1
       const submitResponse = await client.request<SubmitMultisignedRequest, 1>({
         command: 'submit_multisigned',
         tx_json: decode(multisigned) as unknown as Transaction,
