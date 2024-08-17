@@ -1,5 +1,6 @@
 import fixtures from './fixtures/codec-fixtures.json'
-import { decode, encode, decodeLedgerData } from '../src'
+import xrplDefinitions from '../src/enums/definitions.json'
+import { decode, encode, decodeLedgerData, XrplDefinitions } from '../src'
 
 function json(object) {
   return JSON.stringify(object)
@@ -9,6 +10,8 @@ function truncateForDisplay(longStr) {
   return `${longStr.slice(0, 10)} ... ${longStr.slice(-10)}`
 }
 
+const definitions = new XrplDefinitions(xrplDefinitions)
+
 describe('ripple-binary-codec', function () {
   function makeSuite(name, entries) {
     describe(name, function () {
@@ -16,12 +19,12 @@ describe('ripple-binary-codec', function () {
         it(`${name}[${testN}] can encode ${truncateForDisplay(
           json(t.json),
         )} to ${truncateForDisplay(t.binary)}`, () => {
-          expect(encode(t.json)).toEqual(t.binary)
+          expect(encode(t.json, definitions)).toEqual(t.binary)
         })
         it(`${name}[${testN}] can decode ${truncateForDisplay(
           t.binary,
         )} to ${truncateForDisplay(json(t.json))}`, () => {
-          const decoded = decode(t.binary)
+          const decoded = decode(t.binary, definitions)
           expect(decoded).toEqual(t.json)
         })
       })
