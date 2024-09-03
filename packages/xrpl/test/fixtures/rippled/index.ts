@@ -5,6 +5,7 @@ import normalAccountTx from './accountTx.json'
 import fabric from './bookOffers'
 import usd_xrp from './bookOffersUsdXrp.json'
 import xrp_usd from './bookOffersXrpUsd.json'
+import normalFee from './fee.json'
 import normalLedger from './ledger.json'
 import firstPage from './ledgerDataFirstPage.json'
 import firstPageEmpty from './ledgerDataFirstPageEmpty.json'
@@ -82,6 +83,11 @@ const book_offers = {
   xrp_usd,
 }
 
+const fee = {
+  // status: "success" is manually added to this json file
+  normal: normalFee,
+}
+
 const ledger_data = {
   firstPage,
   firstPageEmpty,
@@ -108,6 +114,7 @@ const rippled = {
   account_objects,
   account_tx,
   book_offers,
+  fee,
   ledger,
   ledger_data,
   partial_payments,

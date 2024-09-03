@@ -47,18 +47,18 @@ describe('EscrowCancel', function () {
     )
   })
 
-  it(`Invalid EscrowCancel missing offerSequence`, function () {
+  it(`Invalid EscrowCancel missing offerSequence or EscrowID`, function () {
     delete cancel.OfferSequence
 
     assert.throws(
       () => validateEscrowCancel(cancel),
       ValidationError,
-      'EscrowCancel: missing OfferSequence',
+      'EscrowCancel: must include OfferSequence or EscrowID',
     )
     assert.throws(
       () => validate(cancel),
       ValidationError,
-      'EscrowCancel: missing OfferSequence',
+      'EscrowCancel: must include OfferSequence or EscrowID',
     )
   })
 

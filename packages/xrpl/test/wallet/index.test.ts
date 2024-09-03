@@ -867,7 +867,7 @@ describe('Wallet', function () {
       }
       assert.throws(() => {
         wallet.sign(payment)
-      }, /^Trying to sign an issued currency with a similar standard code to XAH \(received 'xah'\)\. XAH is not an issued currency\./u)
+      }, /^Cannot have an issued currency with a similar standard code to XAH \(received 'xah'\)\. XAH is not an issued currency\./u)
     })
 
     it('sign does NOT throw when a payment contains an issued currency like xrp in hex string format', async function () {

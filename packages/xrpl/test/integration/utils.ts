@@ -203,7 +203,9 @@ export async function verifySubmittedTransaction(
 
   assert(data.result)
   assert.deepEqual(
-    omit(data.result.tx_json, [
+    // omit(data.result.tx_json, [
+    // use API_VERSION 1
+    omit(data.result, [
       'ctid',
       'date',
       'hash',

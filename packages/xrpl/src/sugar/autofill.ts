@@ -3,11 +3,13 @@ import {
   isValidXAddress,
 } from '@transia/ripple-address-codec'
 import { encode } from '@transia/ripple-binary-codec'
+import BigNumber from 'bignumber.js'
 
 import { type Client } from '..'
 import { ValidationError, XrplError } from '../errors'
 import { AccountInfoRequest, AccountObjectsRequest } from '../models/methods'
 import { Transaction } from '../models/transactions'
+import { xrpToDrops } from '../utils'
 
 import { getFeeEstimateXrp } from './getFeeXrp'
 
@@ -232,6 +234,24 @@ export async function setNextValidSequenceNumber(
 }
 
 /**
+ * Fetches the account deletion fee from the server state using the provided client.
+ *
+ * @param client - The client object used to make the request.
+ * @returns A Promise that resolves to the account deletion fee as a BigNumber.
+ * @throws {Error} Throws an error if the account deletion fee cannot be fetched.
+ */
+async function fetchAccountDeleteFee(client: Client): Promise<BigNumber> {
+  const response = await client.request({ command: 'server_state' })
+  const fee = response.result.state.validated_ledger?.reserve_inc
+
+  if (fee == null) {
+    return Promise.reject(new Error('Could not fetch Owner Reserve.'))
+  }
+
+  return new BigNumber(fee)
+}
+
+/**
  * Calculates the fee per transaction type.
  *
  * @param client - The client object.
@@ -248,8 +268,57 @@ export async function calculateFeePerTransactionType(
   copyTx.SigningPubKey = ``
   copyTx.Fee = `0`
   const tx_blob = encode(copyTx)
-  // eslint-disable-next-line require-atomic-updates, no-param-reassign -- ignore
-  tx.Fee = await getFeeEstimateXrp(client, tx_blob, signersCount)
+
+  // netFee is usually 0.00001 XRP (10 drops)
+  const netFeeDrops = await getFeeEstimateXrp(client, tx_blob)
+  let baseFee = new BigNumber(netFeeDrops)
+
+  // EscrowFinish Transaction with Fulfillment
+  if (tx.TransactionType === 'EscrowFinish' && tx.Fulfillment != null) {
+    const fulfillmentBytesSize: number = Math.ceil(tx.Fulfillment.length / 2)
+    // 10 drops × (33 + (Fulfillment size in bytes / 16))
+    const product = new BigNumber(
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers -- expected use of magic numbers
+      scaleValue(netFeeDrops, 33 + fulfillmentBytesSize / 16),
+    )
+    baseFee = product.dp(0, BigNumber.ROUND_CEIL)
+  }
+
+  if (
+    tx.TransactionType === 'AccountDelete' ||
+    tx.TransactionType === 'AMMCreate'
+  ) {
+    baseFee = await fetchAccountDeleteFee(client)
+  }
+
+  /*
+   * Multi-signed Transaction
+   * 10 drops × (1 + Number of Signatures Provided)
+   */
+  if (signersCount > 0) {
+    baseFee = BigNumber.sum(baseFee, scaleValue(netFeeDrops, 1 + signersCount))
+  }
+
+  const maxFeeDrops = xrpToDrops(client.maxFeeXRP)
+  const totalFee =
+    tx.TransactionType === 'AccountDelete'
+      ? baseFee
+      : BigNumber.min(baseFee, maxFeeDrops)
+
+  // Round up baseFee and return it as a string
+  // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-magic-numbers -- param reassign is safe, base 10 magic num
+  tx.Fee = totalFee.dp(0, BigNumber.ROUND_CEIL).toString(10)
+}
+
+/**
+ * Scales the given value by multiplying it with the provided multiplier.
+ *
+ * @param value - The value to be scaled.
+ * @param multiplier - The multiplier to scale the value.
+ * @returns The scaled value as a string.
+ */
+function scaleValue(value, multiplier): string {
+  return new BigNumber(value).times(multiplier).toString()
 }
 
 /**

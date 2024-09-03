@@ -33,11 +33,13 @@ describe('client.autofill', function () {
     await testContext.client.disconnect()
     rippled.server_info.withNetworkId.result.info.build_version = buildVersion
     rippled.server_info.withNetworkId.result.info.network_id = networkID
+    rippled.fee.normal.result.drops.open_ledger_fee = '12'
     testContext.client.connection.on('connected', () => {
       testContext.mockRippled?.addResponse(
         'server_info',
         rippled.server_info.withNetworkId,
       )
+      testContext.mockRippled?.addResponse('fee', rippled.fee.normal)
     })
 
     await testContext.client.connect()
