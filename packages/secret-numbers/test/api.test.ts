@@ -1,9 +1,5 @@
-import {
-  deriveAddress,
-  deriveKeypair,
-  generateSeed,
-} from '@transia/ripple-keypairs'
 import { hexToBytes } from '@xrplf/isomorphic/utils'
+import { deriveAddress, deriveKeypair, generateSeed } from 'ripple-keypairs'
 
 import { Account, secretToEntropy } from '../src'
 

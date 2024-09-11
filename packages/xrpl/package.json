@@ -28,9 +28,9 @@
     "@xrplf/secret-numbers": "^1.0.0",
     "bignumber.js": "^9.0.0",
     "eventemitter3": "^5.0.1",
-    "@transia/ripple-address-codec": "^5.0.0-alpha.0",
-    "@transia/ripple-binary-codec": "^2.1.0-alpha.10",
-    "@transia/ripple-keypairs": "^2.0.0-alpha.0"
+    "ripple-address-codec": "npm:@transia/ripple-address-codec@^5.0.0-alpha.0",
+    "ripple-binary-codec": "npm:@transia/ripple-binary-codec@^2.1.0-alpha.10",
+    "ripple-keypairs": "npm:@transia/ripple-keypairs@^2.0.0-alpha.0"
   },
   "devDependencies": {
     "@types/node": "^18.18.38",

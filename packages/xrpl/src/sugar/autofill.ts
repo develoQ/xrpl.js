@@ -1,9 +1,6 @@
-import {
-  xAddressToClassicAddress,
-  isValidXAddress,
-} from '@transia/ripple-address-codec'
-import { encode } from '@transia/ripple-binary-codec'
 import BigNumber from 'bignumber.js'
+import { xAddressToClassicAddress, isValidXAddress } from 'ripple-address-codec'
+import { encode } from 'ripple-binary-codec'
 
 import { type Client } from '..'
 import { ValidationError, XrplError } from '../errors'

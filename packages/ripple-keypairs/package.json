@@ -21,7 +21,7 @@
   "dependencies": {
     "@noble/curves": "^1.0.0",
     "@xrplf/isomorphic": "^1.0.0",
-    "@transia/ripple-address-codec": "^5.0.0-alpha.0"
+    "ripple-address-codec": "npm:@transia/ripple-address-codec@^5.0.0-alpha.0"
   },
   "keywords": [
     "ripple",

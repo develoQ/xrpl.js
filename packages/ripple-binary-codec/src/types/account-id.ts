@@ -3,7 +3,7 @@ import {
   encodeAccountID,
   isValidXAddress,
   xAddressToClassicAddress,
-} from '@transia/ripple-address-codec'
+} from 'ripple-address-codec'
 import { Hash160 } from './hash-160'
 import { hexToBytes } from '@xrplf/isomorphic/utils'
 

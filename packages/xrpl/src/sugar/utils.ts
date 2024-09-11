@@ -1,7 +1,4 @@
-import {
-  xAddressToClassicAddress,
-  isValidXAddress,
-} from '@transia/ripple-address-codec'
+import { xAddressToClassicAddress, isValidXAddress } from 'ripple-address-codec'
 
 /**
  * If an address is an X-Address, converts it to a classic address.

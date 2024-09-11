@@ -1,8 +1,5 @@
-import {
-  isValidClassicAddress,
-  isValidXAddress,
-} from '@transia/ripple-address-codec'
-import { TRANSACTION_TYPES } from '@transia/ripple-binary-codec'
+import { isValidClassicAddress, isValidXAddress } from 'ripple-address-codec'
+import { TRANSACTION_TYPES } from 'ripple-binary-codec'
 
 import { ValidationError } from '../../errors'
 import {
