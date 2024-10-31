@@ -15,6 +15,7 @@ import {
   Balance,
   DEFAULT_API_VERSION,
 } from '../models/common'
+import { Amendments } from '../models/ledger'
 import {
   Request,
   // account methods
@@ -40,6 +41,7 @@ import type {
   MarkerRequest,
   MarkerResponse,
   SubmitResponse,
+  LedgerEntryResponse,
 } from '../models/methods'
 import type { BookOffer, BookOfferCurrency } from '../models/methods/bookOffers'
 import type {
@@ -223,6 +225,12 @@ class Client extends EventEmitter<EventTypes> {
    *
    */
   public apiVersion: APIVersion = DEFAULT_API_VERSION
+
+  /**
+   * Whether hooks amendment is enabled.
+   *
+   */
+  public hooksEnabled = true
 
   /**
    * Creates a new Client with a websocket connection to a rippled server.
@@ -526,6 +534,17 @@ class Client extends EventEmitter<EventTypes> {
     }
   }
 
+  public async getHooksEnabled(): Promise<void> {
+    const response: LedgerEntryResponse<Amendments> = await this.request({
+      command: 'ledger_entry',
+      index: '7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4',
+    })
+    this.hooksEnabled =
+      response.result.node?.Amendments?.includes(
+        'ECE6819DBA5DB528F1A241695F5A9811EF99467CDE22510954FD357780BBD078',
+      ) ?? false
+  }
+
   /**
    * Tells the Client instance to connect to its rippled server.
    *
@@ -556,7 +575,7 @@ class Client extends EventEmitter<EventTypes> {
    */
   public async connect(): Promise<void> {
     return this.connection.connect().then(async () => {
-      await this.getServerInfo()
+      await Promise.all([this.getServerInfo(), this.getHooksEnabled()])
       this.emit('connected')
     })
   }

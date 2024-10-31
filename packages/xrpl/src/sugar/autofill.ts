@@ -8,7 +8,7 @@ import { AccountInfoRequest, AccountObjectsRequest } from '../models/methods'
 import { Transaction } from '../models/transactions'
 import { xrpToDrops } from '../utils'
 
-import { getFeeEstimateXrp } from './getFeeXrp'
+import { getFeeEstimateXrp, getFeeXrp } from './getFeeXrp'
 
 // Expire unconfirmed transactions after 20 ledger versions, approximately 1 minute, by default
 const LEDGER_OFFSET = 20
@@ -261,13 +261,21 @@ export async function calculateFeePerTransactionType(
   tx: Transaction,
   signersCount = 0,
 ): Promise<void> {
-  const copyTx = { ...tx }
-  copyTx.SigningPubKey = ``
-  copyTx.Fee = `0`
-  const tx_blob = encode(copyTx)
+  if (client.hooksEnabled) {
+    const copyTx = { ...tx }
+    copyTx.SigningPubKey = ``
+    copyTx.Fee = `0`
+    const tx_blob = encode(copyTx)
+    const totalFee = await getFeeEstimateXrp(client, tx_blob)
+    // eslint-disable-next-line max-len -- long line
+    // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-magic-numbers, require-atomic-updates -- param reassign is safe, base 10 magic num
+    tx.Fee = new BigNumber(totalFee).dp(0, BigNumber.ROUND_CEIL).toString(10)
+    return
+  }
 
   // netFee is usually 0.00001 XRP (10 drops)
-  const netFeeDrops = await getFeeEstimateXrp(client, tx_blob)
+  const netFeeXRP = await getFeeXrp(client)
+  const netFeeDrops = xrpToDrops(netFeeXRP)
   let baseFee = new BigNumber(netFeeDrops)
 
   // EscrowFinish Transaction with Fulfillment
